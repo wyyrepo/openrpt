@@ -1,0 +1,7 @@
+OpenRPT for Debian
+------------------
+
+Original OpenRPT package had a program called `graph' which is supposed to
+draw graphs and diagrams out of data supplied either directly or as a result
+or SQL query. Because of this ambiguous name, it is installed under /usr/bin
+as `openrpt-graph'.

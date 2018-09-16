@@ -1,0 +1,163 @@
+/*
+ * OpenRPT report writer and rendering engine
+ * Copyright (C) 2001-2012 by OpenMFG, LLC
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * Please contact info@openmfg.com with any questions on this license.
+ */
+
+Class:    orReport
+Include:  openreports.h
+
+
+Constructors:
+    orReport() [default]
+        Creates an empty orReport object that can have the report and
+        parameters set by calling the setDom() and setParamList()
+        methods.
+
+    orReport(const QString     & name,
+             const QStringList & params = QStringList())
+        Creates an orReport object that will load and set the report definition
+        by the name of `name' and set the query parameter list to `params'. If
+        successfull a call to the method isValid() will return true.
+
+Rendering Methods:
+    bool render(QPainter * painter,
+                QPrinter * printer = 0)
+        Renders the report definition to the specified painter device which
+        is associated with the optional printer device.  Returns false if
+        there was an error while rendering the report.
+
+    bool print(QPrinter * printer = 0,
+               bool       setupPrinter = true)
+        Renders the report definition to the optional `printer' device is
+        specified and will call the the `printer' setup() method if
+        `setupPrinter' is true. if you do not specify a value for `printer'
+        or if the value is null then a generic printer device will be created.
+        The `setupPrinter' option can be used if you plan on printing the same
+        report definition multiple time, possible with different query params
+        and if you do not wish to have the setup screen displayed each time
+        you may set `setupPrinter' to false on all additional calls after the
+        first call. Returns false if there was an error while printing the
+        report.
+
+Property Methods:
+    void    setWatermarkText(const QString  & text)
+        The text of the Watermark.
+
+    void    setWatermarkFont(const QFont    & font)
+        The font that is to be used when rendering the watemark on each page.
+        For purposes of rendering a font that fits bets on the page the point
+        size is ignored and the best size availble is chosen for the specified
+        font. The default value is Helvetic or Arial depending on available
+        system fonts.
+
+        Fonts vary from system to system and it is best to choose a font that
+        has a large range of point sizes availble to it so that the rendered
+        watermark may be drawn large enough on the report.
+
+    void    setWatermarkOpacity(unsigned char opacity)
+        The opacity of the watermark as it is rendered to the report. This
+        value is from 0 to 255 inclusive with 0 being fully transparent and 255
+        being fully opaque. The default value is 25.
+
+    QString watermarkText()
+        Returns the current text that the watermark will render.
+
+    QFont   watermarkFont()
+        Returns the current font that is to be used when rendering the
+        watermark.
+
+    unsigned char watermarkOpacity()
+        Returns the opacity that is to be used when rendering the watermark.
+
+    void    setBackgroundImage(const QImage & image)
+        Sets the Image that is to be used when rendering the background.
+    
+    void    setBackgroundRect(const QRect & rect)
+        This function sets the area rectacngle where the background will
+        be rendered onto each page. This rectangle is pecified in whole units
+        at 100 dpi with the upper left hand corner being 0,0 and the lower
+        right hand corner being the dimensions of the paper size at 100 dpi.
+
+    void    setBackgroundRect(int x, int y, int w, int h)
+        This function is acts the same as the above function is here for
+        convenience.
+
+    void    setBackgroundOpacity(unsigned char opacity)
+        The opacity of the image as it is rendered to the report. This value is
+        from 0 to 255 inclusive with 0 being fully transparent and 255 being
+        fully opaque. The default value is 25.
+
+    void    setBackgroundAlignment(int alignment)
+        Sets the alignment of the background image within the specified
+        rectangle. The values are the same as Qt::AlignmentFlags. The
+        default value is AlignLeft | AlignTop.
+
+        NOTE: AlignAuto acts the same as AlignLeft and AlignTop for the
+              respective horizontal and vertical alignment falgs.
+
+    void    setBackgroundScale(bool scale)
+        Sets if the background image should be resized to fit with in the
+        specified rectangle. If this is true then the mode use to scale the
+        image can be specified with the setBackgroundScaleMode() method. The
+        default value is false.
+
+    void    setBackgroundScaleMode(QImage::ScaleMode mode)
+        Sets the scale mode of the background image to one of the values of
+        QImage::ScaleMode.  This value is only used if backgroundScale() is
+        true. The default value is QImage::ScaleFree.
+
+    QImage backgroundImage()
+        Returns the current Image set to render as the background. If no image
+        is specified then a null QImage is returned.
+
+    QRect backgroundRect()
+        Returns the current rectangle specified to render the background image
+        in. Returns a null QRect is returned.
+
+    unsigned char backgroundOpacity()
+        Returns the current opacity to be used when rendering the background
+        image.
+
+    int backgroundAlignment()
+        Returns the default alignment of the background image within the
+        specified rectangle.
+
+    bool backgroundScale()
+        Returns true if the background image should be scaled to fit within the
+        rectangle specified when rendering the report.
+
+    QImage::ScaleMode backgroundScaleMode()
+        Returns the currently set scale mode used if backgroundScale() is true.
+
+    bool setDom(const QDomDocument & reportdef)
+        Sets the current report definition to the specified document passed
+        in. It is import to note that calling this function will set all the
+        Watermark and Background properties to the values of the respective
+        properties in the report definition or their default value if none
+        where specified. If you wish to override these values you will have
+        to do so after each call you make to the setDom() method. Return false
+        if there was a problem setting the new document.
+
+    void setParamList(const QStringList & params)
+        Sets the current parameter list that is used when the print() and
+        render() methods are called.
+
+    bool isValid()
+        Returns true is this object is valid and ready to be have it's
+        print() or render() methods called.
+

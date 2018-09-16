@@ -1,0 +1,334 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Test for Text elements</title>
+ <name>Test for Text elements</name>
+ <description>Test for Text elements</description>
+ <grid>
+  <snap/>
+  <show/>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>Letter</size>
+ <portrait/>
+ <topmargin>25</topmargin>
+ <bottommargin>25</bottommargin>
+ <rightmargin>25</rightmargin>
+ <leftmargin>25</leftmargin>
+ <querysource>
+  <name>detail</name>
+  <sql>SELECT * FROM TABLE1
+</sql>
+ </querysource>
+ <querysource>
+  <name>footer</name>
+  <sql>SELECT * FROM TABLE2
+</sql>
+ </querysource>
+ <pghead>
+  <firstpage/>
+  <height>325</height>
+  <label>
+   <rect>
+    <x>27</x>
+    <y>56</y>
+    <width>739</width>
+    <height>167</height>
+    <color>
+     <red>170</red>
+     <green>170</green>
+     <blue>255</blue>
+    </color>
+   </rect>
+   <font>
+    <face>Arial Black</face>
+    <size>48</size>
+    <weight>87</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>First page Header</string>
+  </label>
+  <line>
+   <xstart>4</xstart>
+   <ystart>321</ystart>
+   <xend>764</xend>
+   <yend>321</yend>
+   <weight>2</weight>
+  </line>
+ </pghead>
+ <pghead>
+  <height>150</height>
+  <label>
+   <rect>
+    <x>20</x>
+    <y>15</y>
+    <width>739</width>
+    <height>88</height>
+    <color>
+     <red>170</red>
+     <green>170</green>
+     <blue>255</blue>
+    </color>
+   </rect>
+   <font>
+    <face>Arial Black</face>
+    <size>48</size>
+    <weight>87</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Other pages Header</string>
+  </label>
+  <line>
+   <xstart>5</xstart>
+   <ystart>145</ystart>
+   <xend>765</xend>
+   <yend>145</yend>
+   <weight>2</weight>
+   <style>2</style>
+  </line>
+ </pghead>
+ <section>
+  <name>detail</name>
+  <group>
+   <name>detail</name>
+   <column>groupby</column>
+   <foot>
+    <height>120</height>
+    <label>
+     <rect>
+      <x>23</x>
+      <y>12</y>
+      <width>739</width>
+      <height>88</height>
+      <color>
+       <red>170</red>
+       <green>170</green>
+       <blue>255</blue>
+      </color>
+     </rect>
+     <font>
+      <face>Arial Black</face>
+      <size>48</size>
+      <weight>87</weight>
+     </font>
+     <hcenter/>
+     <vcenter/>
+     <string>Group Footer</string>
+    </label>
+   </foot>
+  </group>
+  <detail>
+   <key>
+    <query>detail</query>
+   </key>
+   <height>40</height>
+   <text>
+    <rect>
+     <x>280</x>
+     <y>5</y>
+     <width>245</width>
+     <height>15</height>
+    </rect>
+    <bottompad>0</bottompad>
+    <font>
+     <face>Arial</face>
+     <size>8</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>detail</query>
+     <column>item_description</column>
+    </data>
+   </text>
+   <field>
+    <rect>
+     <x>152</x>
+     <y>5</y>
+     <width>55</width>
+     <height>15</height>
+    </rect>
+    <font>
+     <face>Arial</face>
+     <size>8</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <top/>
+    <data>
+     <query>detail</query>
+     <column>item_qty</column>
+    </data>
+   </field>
+   <text>
+    <rect>
+     <x>215</x>
+     <y>5</y>
+     <width>55</width>
+     <height>15</height>
+    </rect>
+    <bottompad>0</bottompad>
+    <font>
+     <face>Arial</face>
+     <size>8</size>
+     <weight>normal</weight>
+    </font>
+    <hcenter/>
+    <top/>
+    <data>
+     <query>detail</query>
+     <column>groupby</column>
+    </data>
+   </text>
+   <field>
+    <rect>
+     <x>5</x>
+     <y>5</y>
+     <width>145</width>
+     <height>30</height>
+    </rect>
+    <font>
+     <face>Arial</face>
+     <size>8</size>
+     <weight>bold</weight>
+    </font>
+    <wordwrap/>
+    <left/>
+    <top/>
+    <data>
+     <query>detail</query>
+     <column>item_number</column>
+    </data>
+   </field>
+   <text>
+    <rect>
+     <x>535</x>
+     <y>5</y>
+     <width>215</width>
+     <height>15</height>
+    </rect>
+    <bottompad>0</bottompad>
+    <font>
+     <face>Arial</face>
+     <size>8</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>detail</query>
+     <column>item_shortdescription</column>
+    </data>
+   </text>
+  </detail>
+ </section>
+ <pgfoot>
+  <height>25</height>
+  <label>
+   <rect>
+    <x>275</x>
+    <y>10</y>
+    <width>40</width>
+    <height>15</height>
+   </rect>
+   <font>
+    <face>Arial</face>
+    <size>8</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Page:</string>
+  </label>
+  <field>
+   <rect>
+    <x>315</x>
+    <y>10</y>
+    <width>175</width>
+    <height>15</height>
+   </rect>
+   <font>
+    <face>Arial</face>
+    <size>8</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>page_number</column>
+   </data>
+  </field>
+  <line>
+   <xstart>5</xstart>
+   <ystart>5</ystart>
+   <xend>765</xend>
+   <yend>5</yend>
+   <weight>0</weight>
+  </line>
+ </pgfoot>
+ <database>
+  <table name="TABLE1">
+   <columns>
+    <column type="TEXT">item_number</column>
+    <column type="NUMERIC">item_qty</column>
+    <column type="TEXT">groupby</column>
+    <column type="TEXT">item_description</column>
+    <column type="TEXT">item_shortdescription</column>
+   </columns>
+   <record>
+    <val>ITEM NUM 1</val>
+    <val>15</val>
+    <val>A</val>
+    <val>1: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer faucibus ante nibh, quis volutpat est. Cras porttitor varius erat, dignissim pharetra felis tristique sit amet. In quam elit, pharetra et tincidunt sit amet, posuere eget augue. Nulla neque libero, tristique at lobortis non, dapibus at lorem. In hac habitasse platea dictumst. Sed vitae dolor in mi dapibus malesuada. Donec ut aliquam nunc.</val>
+    <val>1: Morbi vitae quam erat. Nulla vel risus id quam tincidunt hendrerit. Duis imperdiet magna vitae neque porttitor ac aliquam turpis.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 2</val>
+    <val>25</val>
+    <val>A</val>
+    <val>2: Sed lacus tortor, placerat nec tristique eu, condimentum sit amet mi. Nam in nunc at metus tempor posuere in eu tellus. Duis venenatis, metus non aliquet imperdiet, elit massa vehicula dolor, eget mollis elit tellus nec neque. Aliquam erat volutpat. Nullam non eros purus. Proin rutrum fermentum accumsan. Suspendisse congue.</val>
+    <val>2: Nulla facilisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a quam ut nisi faucibus commodo at id purus.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 3</val>
+    <val>35</val>
+    <val>B</val>
+    <val>3: Nam eget eros felis. Donec placerat, tortor nec dapibus rhoncus, purus leo porttitor mauris, nec tincidunt dui eros at diam. Vivamus porta bibendum eros, vitae fringilla urna tempus id. Quisque justo est, iaculis nec tincidunt at, molestie quis dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per.</val>
+    <val>3: Phasellus sapien dui, ornare id lacinia ac, vestibulum nec nibh. Proin sapien metus, bibendum tristique.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 4</val>
+    <val>45</val>
+    <val>B</val>
+    <val>4: Quisque eget sem a magna pharetra imperdiet id sed nunc. Morbi mattis elementum elit malesuada feugiat. Maecenas molestie mi at diam volutpat vel porttitor massa porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus accumsan nibh nec ante condimentum hendrerit. Nulla nunc enim, pulvinar.</val>
+    <val>4: Curabitur varius felis in mauris porttitor vitae aliquet dui luctus. Donec pulvinar, nunc eget interdum.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 5</val>
+    <val>55</val>
+    <val>B</val>
+    <val>5: Nunc viverra velit quis massa accumsan convallis. Pellentesque eleifend ante id nulla lobortis dictum. Nunc sagittis convallis nibh, sit amet consequat lectus iaculis et. Maecenas pulvinar, eros sed iaculis interdum, mauris est tincidunt lorem, eu auctor odio ipsum eget arcu. Pellentesque quis nunc nibh, euismod.</val>
+    <val>5: Curabitur eu ultrices mauris. Aenean faucibus sem nec massa vehicula id vulputate nisl rhoncus. Proin.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 6</val>
+    <val>66</val>
+    <val>B</val>
+    <val>6: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis egestas sem quis est bibendum id rhoncus tortor tincidunt. Integer fermentum risus ac elit sodales malesuada. Aliquam faucibus lectus ac purus ullamcorper in ultricies ipsum vulputate. Duis posuere purus libero, at auctor velit. Ut augue velit, euismod a convallis nec, egestas.</val>
+    <val>6: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sit amet imperdiet lectus. Aliquam nec libero dolor. Duis elementum nunc.</val>
+   </record>
+  </table>
+  <table name="TABLE2">
+   <columns>
+    <column type="NUMERIC">f_subtotal</column>
+   </columns>
+   <record>
+    <val>100</val>
+   </record>
+  </table>
+ </database>
+</report>

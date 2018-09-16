@@ -1,0 +1,4 @@
+# unfortunately, upstream uses crazy download naming schema, so we can't use this to update automagically yet :(
+
+version=3
+http://sf.net/postbooks/OpenRPT-([\d+\.]+)-source.tar.bz2

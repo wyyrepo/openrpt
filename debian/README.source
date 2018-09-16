@@ -1,0 +1,18 @@
+
+The following was used to repack the tarball from upstream:
+
+   find . -name '.DS_Store' -exec rm {} \;
+   find . -name '*.o' -exec rm {} \;
+   find . -name '*.a' -exec rm {} \;
+   find . -exec file {} \; | grep executable | cut -f1 -d: | xargs rm
+
+
+The following was used to detect non-text artifacts:
+
+   find . -type f -exec file {} \; | \
+       egrep -v 'ASCII|XML|Unicode|PNG|empty|8859'
+
+The binary files with .qm extension are translations
+of the strings for other languages.  This is a valid file format
+used by Qt and they can be managed with some Qt tool
+

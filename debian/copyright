@@ -1,0 +1,60 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: OpenRPT
+Upstream-Contact: OpenMFG, LLC and others <sales@xtuple.com>
+Source: https://www.xtuple.com/openrpt/
+License: LGPL-2.1
+Copyright:
+    (C) 2001—2011 by OpenMFG, LLC
+    (C) 2007 David Johnson <david@usermode.org>
+    (C) 2010 by Manuel Soriano
+    (C) 2011 by Paladin Logic, Ltd
+
+Files: MetaSQL/regex/*
+Copyright: 1992, 1993, 1994, 1997 Henry Spencer
+License:
+ This software is not subject to any license of the American Telephone
+ and Telegraph Company or of the Regents of the University of California.
+ .
+ Permission is granted to anyone to use this software for any purpose on
+ any computer system, and to alter it and redistribute it, subject
+ to the following restrictions:
+ .
+ 1. The author is not responsible for the consequences of use of this
+    software, no matter how awful, even if they arise from flaws in it.
+ .
+ 2. The origin of this software must not be misrepresented, either by
+    explicit claim or by omission.  Since few users ever read sources,
+    credits must appear in the documentation.
+ .
+ 3. Altered versions must be plainly marked as such, and must not be
+    misrepresented as being the original software.  Since few users
+    ever read sources, credits must appear in the documentation.
+ .
+ 4. This notice may not be removed or altered.
+ =====================================================================
+ .
+ This version has been modified from it's original to reduce the number
+ of totatl files.
+
+Files: debian/*
+Copyright: 2012—2013, Andrew Shadura <andrewsh@debian.org>
+           2013, Daniel Pocock http://danielpocock.com
+License: LGPL-2.1
+
+License: LGPL-2.1
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+ .
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+ .
+ On Debian GNU/Linux systems, the complete text of the GNU Lesser General
+ Public License can be found in /usr/share/common-licenses/LGPL-2.1

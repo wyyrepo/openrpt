@@ -1,0 +1,118 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>untitled</title>
+ <name></name>
+ <description></description>
+ <size>Letter</size>
+ <portrait/>
+ <topmargin>50</topmargin>
+ <bottommargin>50</bottommargin>
+ <rightmargin>50</rightmargin>
+ <leftmargin>50</leftmargin>
+ <querysource>
+  <name>graph_query</name>
+  <sql>
+    select date(invhist_transdate) as col_lbl, invhist_qoh_before, invhist_qoh_after
+      from invhist, itemsite, item
+     where invhist_itemsite_id = itemsite_id
+       and itemsite_item_id = item_id
+       and item_number = 'B1'
+       and invhist_transdate > (CURRENT_DATE - 10)
+  order by invhist_transdate limit 50;
+  </sql>
+ </querysource>
+ <colordef>
+  <name>green</name>
+  <red>0</red>
+  <green>255</green>
+  <blue>0</blue>
+ </colordef>
+ <colordef>
+  <name>red</name>
+  <red>255</red>
+  <green>0</green>
+  <blue>0</blue>
+ </colordef>
+ <rpthead>
+  <height>480</height>
+  <graph>
+   <rect>
+    <x>38</x>
+    <y>19</y>
+    <width>673</width>
+    <height>410</height>
+   </rect>
+   <font>
+    <face>helvetica</face>
+    <size>7</size>
+    <weight>normal</weight>
+   </font>
+   <data>
+    <query>graph_query</query>
+    <column/>
+   </data>
+   <title>
+    <string>Graph Title</string>
+   </title>
+   <dataaxis>
+    <title>
+     <string>Data Label</string>
+    </title>
+    <column>col_lbl</column>
+   </dataaxis>
+   <valueaxis>
+    <title>
+     <string>Value Label</string>
+    </title>
+    <min>0</min>
+    <max>100</max>
+    <autominmax>true</autominmax>
+   </valueaxis>
+   <series>
+    <name>QOH After</name>
+    <column>invhist_qoh_after</column>
+    <color>red</color>
+    <style>
+     <bar/>
+    </style>
+   </series>
+   <series>
+    <name>QOH Before</name>
+    <column>invhist_qoh_before</column>
+    <color>green</color>
+    <style>
+     <line/>
+     <point/>
+    </style>
+   </series>
+  </graph>
+  <line>
+   <xstart>7</xstart>
+   <ystart>19</ystart>
+   <xend>739</xend>
+   <yend>19</yend>
+   <weight>0</weight>
+  </line>
+  <line>
+   <xstart>711</xstart>
+   <ystart>3</ystart>
+   <xend>711</xend>
+   <yend>447</yend>
+   <weight>0</weight>
+  </line>
+  <line>
+   <xstart>38</xstart>
+   <ystart>7</ystart>
+   <xend>38</xend>
+   <yend>452</yend>
+   <weight>0</weight>
+  </line>
+  <line>
+   <xstart>17</xstart>
+   <ystart>429</ystart>
+   <xend>743</xend>
+   <yend>429</yend>
+   <weight>0</weight>
+  </line>
+ </rpthead>
+</report>

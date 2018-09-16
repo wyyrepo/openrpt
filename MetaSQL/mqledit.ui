@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <author>Chris Ryan</author>
+ <comment> * OpenRPT report writer and rendering engine
+ * Copyright (C) 2001-2014 by OpenMFG, LLC
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * Please contact info@openmfg.com with any questions on this license.</comment>
+ <class>MQLEdit</class>
+ <widget class="QWidget" name="MQLEdit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>[*]MetaSQL Editor</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QMenuBar" name="MenuBar">
+     <widget class="QMenu" name="ToolsMenu">
+      <property name="title">
+       <string>&amp;Tools</string>
+      </property>
+      <addaction name="toolsParse_QueryAction"/>
+      <addaction name="toolsExecute_QueryAction"/>
+      <addaction name="separator"/>
+      <addaction name="toolsTest_ModeAction"/>
+      <addaction name="separator"/>
+      <addaction name="searchForParametersAction"/>
+     </widget>
+     <widget class="QMenu" name="helpMenu">
+      <property name="title">
+       <string>&amp;Help</string>
+      </property>
+      <addaction name="helpContentsAction"/>
+      <addaction name="helpIndexAction"/>
+      <addaction name="separator"/>
+      <addaction name="helpAboutAction"/>
+     </widget>
+     <widget class="QMenu" name="ViewMenu">
+      <property name="title">
+       <string>&amp;View</string>
+      </property>
+      <addaction name="viewParameter_ListAction"/>
+      <addaction name="viewLog_OutputAction"/>
+      <addaction name="viewResultsAction"/>
+      <addaction name="viewExecuted_SQLAction"/>
+     </widget>
+     <widget class="QMenu" name="editMenu">
+      <property name="title">
+       <string>&amp;Edit</string>
+      </property>
+      <addaction name="editUndoAction"/>
+      <addaction name="editRedoAction"/>
+      <addaction name="separator"/>
+      <addaction name="editCutAction"/>
+      <addaction name="editCopyAction"/>
+      <addaction name="editPasteAction"/>
+      <addaction name="separator"/>
+      <addaction name="editFindAction"/>
+     </widget>
+     <widget class="QMenu" name="fileMenu">
+      <property name="title">
+       <string>&amp;File</string>
+      </property>
+      <addaction name="fileNewAction"/>
+      <addaction name="fileOpenAction"/>
+      <addaction name="fileSaveAction"/>
+      <addaction name="fileSaveAsAction"/>
+      <addaction name="separator"/>
+      <addaction name="fileDatabaseConnectAction"/>
+      <addaction name="fileDatabaseDisconnectAction"/>
+      <addaction name="fileDatabaseOpenAction"/>
+      <addaction name="fileDatabaseSaveAsAction"/>
+      <addaction name="separator"/>
+      <addaction name="filePrintAction"/>
+      <addaction name="separator"/>
+      <addaction name="fileExitAction"/>
+     </widget>
+     <addaction name="fileMenu"/>
+     <addaction name="editMenu"/>
+     <addaction name="ViewMenu"/>
+     <addaction name="ToolsMenu"/>
+     <addaction name="helpMenu"/>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolBar" name="toolBar">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <addaction name="fileNewAction"/>
+     <addaction name="fileOpenAction"/>
+     <addaction name="fileSaveAction"/>
+     <addaction name="separator"/>
+     <addaction name="editUndoAction"/>
+     <addaction name="separator"/>
+     <addaction name="editCutAction"/>
+     <addaction name="editCopyAction"/>
+     <addaction name="editPasteAction"/>
+     <addaction name="helpAboutAction"/>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout">
+     <item>
+      <widget class="QTextEdit" name="_text">
+       <property name="font">
+        <font>
+         <family>Courier</family>
+         <pointsize>11</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+         <underline>false</underline>
+         <strikeout>false</strikeout>
+        </font>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+  <action name="fileNewAction">
+   <property name="icon">
+    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+     <normaloff>:/icons/document_32.png</normaloff>:/icons/document_32.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;New</string>
+   </property>
+   <property name="iconText">
+    <string>New</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="fileOpenAction">
+   <property name="icon">
+    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+     <normaloff>:/icons/folder_32.png</normaloff>:/icons/folder_32.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open...</string>
+   </property>
+   <property name="iconText">
+    <string>Open</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="fileSaveAction">
+   <property name="icon">
+    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+     <normaloff>:/icons/diskette_32.png</normaloff>:/icons/diskette_32.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+   <property name="iconText">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="fileSaveAsAction">
+   <property name="text">
+    <string>Save &amp;As... (File)</string>
+   </property>
+   <property name="iconText">
+    <string>Save As</string>
+   </property>
+   <property name="shortcut">
+    <string/>
+   </property>
+  </action>
+  <action name="filePrintAction">
+   <property name="icon">
+    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+     <normaloff>:/icons/printer_32.png</normaloff>:/icons/printer_32.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Print...</string>
+   </property>
+   <property name="iconText">
+    <string>Print</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="fileExitAction">
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+   <property name="iconText">
+    <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string/>
+   </property>
+  </action>
+  <action name="editUndoAction">
+   <property name="icon">
+    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+     <normaloff>:/icons/undo_32.png</normaloff>:/icons/undo_32.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Undo</string>
+   </property>
+   <property name="iconText">
+    <string>Undo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="editRedoAction">
+   <property name="text">
+    <string>&amp;Redo</string>
+   </property>
+   <property name="iconText">
+    <string>Redo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+  </action>
+  <action name="editCutAction">
+   <property name="icon">
+    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+     <normaloff>:/icons/scissors_32.png</normaloff>:/icons/scissors_32.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Cut</string>
+   </property>
+   <property name="iconText">
+    <string>Cut</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="editCopyAction">
+   <property name="icon">
+    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+     <normaloff>:/icons/copy_32.png</normaloff>:/icons/copy_32.png</iconset>
+   </property>
+   <property name="text">
+    <string>C&amp;opy</string>
+   </property>
+   <property name="iconText">
+    <string>Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="editPasteAction">
+   <property name="icon">
+    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+     <normaloff>:/icons/paste_32.png</normaloff>:/icons/paste_32.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Paste</string>
+   </property>
+   <property name="iconText">
+    <string>Paste</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="editFindAction">
+   <property name="icon">
+    <iconset>
+     <normaloff>image9</normaloff>image9</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Find...</string>
+   </property>
+   <property name="iconText">
+    <string>Find</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="helpContentsAction">
+   <property name="text">
+    <string>&amp;Contents...</string>
+   </property>
+   <property name="iconText">
+    <string>Contents</string>
+   </property>
+   <property name="shortcut">
+    <string/>
+   </property>
+  </action>
+  <action name="helpIndexAction">
+   <property name="text">
+    <string>&amp;Index...</string>
+   </property>
+   <property name="iconText">
+    <string>Index</string>
+   </property>
+   <property name="shortcut">
+    <string/>
+   </property>
+  </action>
+  <action name="helpAboutAction">
+   <property name="icon">
+    <iconset resource="../OpenRPT/images/OpenRPTMetaSQL.qrc">
+     <normaloff>:/icons/help_32.png</normaloff>:/icons/help_32.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+   <property name="iconText">
+    <string>About</string>
+   </property>
+   <property name="shortcut">
+    <string/>
+   </property>
+  </action>
+  <action name="fileDatabaseAction">
+   <property name="text">
+    <string>Database</string>
+   </property>
+   <property name="iconText">
+    <string>Database</string>
+   </property>
+  </action>
+  <action name="fileDatabaseConnectAction">
+   <property name="text">
+    <string>Connect to Database...</string>
+   </property>
+   <property name="iconText">
+    <string>Connect...</string>
+   </property>
+  </action>
+  <action name="fileDatabaseDisconnectAction">
+   <property name="text">
+    <string>Disconnect From Database</string>
+   </property>
+   <property name="iconText">
+    <string>Disconnect</string>
+   </property>
+  </action>
+  <action name="fileUnnamedAction">
+   <property name="text">
+    <string>Unnamed</string>
+   </property>
+   <property name="iconText">
+    <string>Unnamed</string>
+   </property>
+  </action>
+  <action name="viewParameter_ListAction">
+   <property name="text">
+    <string>Parameter List...</string>
+   </property>
+   <property name="iconText">
+    <string>Parameter List...</string>
+   </property>
+  </action>
+  <action name="viewLog_OutputAction">
+   <property name="text">
+    <string>Log Output...</string>
+   </property>
+   <property name="iconText">
+    <string>Log Output...</string>
+   </property>
+  </action>
+  <action name="viewResultsAction">
+   <property name="text">
+    <string>Results...</string>
+   </property>
+   <property name="iconText">
+    <string>Results...</string>
+   </property>
+  </action>
+  <action name="toolsParse_QueryAction">
+   <property name="text">
+    <string>Parse Query</string>
+   </property>
+   <property name="iconText">
+    <string>Parse Query</string>
+   </property>
+  </action>
+  <action name="toolsExecute_QueryAction">
+   <property name="text">
+    <string>Execute Query</string>
+   </property>
+   <property name="iconText">
+    <string>Execute Query</string>
+   </property>
+  </action>
+  <action name="viewExecuted_SQLAction">
+   <property name="text">
+    <string>Executed SQL...</string>
+   </property>
+   <property name="iconText">
+    <string>Executed SQL...</string>
+   </property>
+  </action>
+  <action name="fileDatabaseOpenAction">
+   <property name="text">
+    <string>Open... (Database)</string>
+   </property>
+  </action>
+  <action name="fileDatabaseSaveAsAction">
+   <property name="text">
+    <string>Save As... (Database)</string>
+   </property>
+  </action>
+  <action name="toolsTest_ModeAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Test Mode</string>
+   </property>
+  </action>
+  <action name="searchForParametersAction">
+   <property name="text">
+    <string>Search For Parameters</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="0"/>
+ <resources>
+  <include location="../OpenRPT/images/OpenRPTMetaSQL.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>editUndoAction</sender>
+   <signal>activated()</signal>
+   <receiver>_text</receiver>
+   <slot>undo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editRedoAction</sender>
+   <signal>activated()</signal>
+   <receiver>_text</receiver>
+   <slot>redo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editCutAction</sender>
+   <signal>activated()</signal>
+   <receiver>_text</receiver>
+   <slot>cut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editCopyAction</sender>
+   <signal>activated()</signal>
+   <receiver>_text</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editPasteAction</sender>
+   <signal>activated()</signal>
+   <receiver>_text</receiver>
+   <slot>paste()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

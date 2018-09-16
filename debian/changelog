@@ -1,0 +1,92 @@
+openrpt (3.3.13-1) unstable; urgency=medium
+
+  * Placeholder
+
+ -- Gil Moskowitz <gmoskowitz@xtuple.com> Thu, 15 September 2016 16:42:00 -0400
+
+openrpt (3.3.12-1) unstable; urgency=medium
+
+  * Placeholder
+
+ -- Christopher Cotnoir <ccotnoir@xtuple.com>  Fri, 22 July 2016 15:36:00 -0400
+
+openrpt (3.3.11-1) unstable; urgency=medium
+
+  * Placeholder
+
+ -- Gil Moskowitz <gmoskowitz@xtuple.com>  Wed, 01 Jul 2015 10:20:00 -0400
+
+openrpt (3.3.10-1) unstable; urgency=medium
+
+  * Placeholder
+
+ -- Gil Moskowitz <gmoskowitz@xtuple.com>  Wed, 01 Jul 2015 10:20:00 -0400
+
+openrpt (3.3.7-1) unstable; urgency=medium
+
+  * Latest upstream snapshot.
+
+ -- Daniel Pocock <daniel@pocock.pro>  Sat, 18 Oct 2014 16:46:00 +0200
+
+openrpt (3.3.4-6) unstable; urgency=low
+
+  * Now really fix FTBFS on ARM.
+
+ -- Andrew Shadura <andrewsh@debian.org>  Mon, 23 Sep 2013 15:55:19 +0200
+
+openrpt (3.3.4-5) unstable; urgency=low
+
+  * Fix FTBFS on ARM.
+  * Convert to dynamic linking by using a patch.
+
+ -- Andrew Shadura <andrewsh@debian.org>  Mon, 23 Sep 2013 11:20:53 +0200
+
+openrpt (3.3.4-4) unstable; urgency=low
+
+  [ Daniel Pocock ]
+  * Build a shared library package.
+
+  [ Andrew Shadura ]
+  * Fix cleanup.
+  * Depend on dpkg-dev (>= 1.16.1~).
+  * Fix permissions.
+
+ -- Andrew Shadura <andrewsh@debian.org>  Fri, 20 Sep 2013 15:08:00 +0200
+
+openrpt (3.3.4-3) unstable; urgency=low
+
+  [ Daniel Pocock ]
+  * Package more files needed during the PostBooks 4.0 build.
+  * Enable parallel build.
+
+  [ Andrew Shadura ]
+  * Don't call qmake explicitly, use dh's built-in qmake support instead.
+
+ -- Andrew Shadura <andrewsh@debian.org>  Fri, 20 Sep 2013 11:29:44 +0200
+
+openrpt (3.3.4-2) experimental; urgency=low
+
+  [ Daniel Pocock ]
+  * Install generated header files too.
+
+ -- Andrew Shadura <andrewsh@debian.org>  Thu, 19 Sep 2013 11:50:13 +0200
+
+openrpt (3.3.4-1) experimental; urgency=low
+
+  * New upstream release.
+  * Add patches from upstream fixing crashes and minor bugs.
+
+ -- Andrew Shadura <andrewsh@debian.org>  Thu, 19 Sep 2013 11:18:41 +0200
+
+openrpt (3.3.3+dfsg-2) experimental; urgency=low
+
+  * Update debian/copyright.
+  * Update Vcs-* fields.
+
+ -- Andrew Shadura <andrewsh@debian.org>  Wed, 18 Sep 2013 21:28:27 +0200
+
+openrpt (3.3.3+dfsg-1) experimental; urgency=low
+
+  * Initial release. (Closes: #338784)
+
+ -- Andrew Shadura <andrewsh@debian.org>  Mon, 09 Sep 2013 13:44:35 +0200

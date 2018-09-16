@@ -1,0 +1,1046 @@
+-- Copyright (c) 1999-2014 by OpenMFG LLC, d/b/a xTuple.
+-- See www.xtuple.com/CPAL for the full text of the software license.
+/**
+ * This query is a MetaSQL test query intended to cover all MetaSQL
+ * functionality. For this test to pass, specific parameters must be sent to
+ * the MetaSQL parser. The MetaSQL parser will need the following parameters
+ * for the test to pass:
+ *
+ * var params = {
+ *                start: true
+ *                ,test_0_1_0: 'test_0_1_0'
+ *                ,test_0_1_2: ['test_0_1_2']
+ *                ,test_0_1_3: ['test_0_1_3', 'test_0_1_3_2', 'test_0_1_3_3']
+ *                ,test_0_1_4: 'true THEN true END AS test_0_1_4) AS tests; SELECT current_user--'
+ *                ,test_0_2_0: 'test_0_2_0'
+ *                ,test_0_2_2: ['test_0_2_2']
+ *                ,test_0_2_3: ['test_0_2_3','test_0_2_3_2', 'test_0_2_3_3']
+ *                ,test_0_2_4: "(SELECT usr_username FROM usr WHERE usr_username = 'admin')"
+ *                ,test_0_3_0: true
+ *                ,test_0_3_2: null
+ *                ,test_0_3_3: ''
+ *                ,test_0_3_4: 'true THEN true END AS test_0_3_4) AS test; SELECT current_user--'
+ *                ,test_0_4_0a: 'test_0_4_0'
+ *                ,test_0_4_2a: null
+ *                ,test_0_4_3a: ''
+ *                ,test_0_4_4a: 'true THEN true END AS test_0_4_4) AS test; SELECT current_user--'
+ *                ,test_0_5_0: ['test_0_5_0']
+ *                ,test_0_5_1: ['test_0_5_1','test_0_5_1_2', 'test_0_5_1_3']
+ *                ,test_0_5_2: 'test_0_5_2'
+ *                ,test_0_5_4: ['true THEN true END AS test_0_5_4) AS test; SELECT current_user--']
+ *                ,test_0_6_0: ['test_0_6_0']
+ *                ,test_0_6_1: ['test_0_6_1','test_0_6_1_2', 'test_0_6_1_3']
+ *                ,test_0_6_2: 'test_0_6_2'
+ *                ,test_0_6_4: ['true THEN true END AS test_0_6_4) AS test; SELECT current_user--']
+ *                ,test_1_3_0: 'test_1_3_0'
+ *                ,test_1_3_1: 'test_1_3_1'
+ *                ,test_1_3_1_2: 'test_1_3_1_2'
+ *                ,test_2_3_0: 'test_2_3_0'
+ *                ,test_2_3_1: 'test_2_3_1'
+ *                ,test_3_3_0: 'test_3_3_0'
+ *                ,test_3_3_1: 'test_3_3_1'
+ *                ,test_3_3_2: 'test_3_3_2'
+ *                ,test_4_0_0: ['test_4_0_0', 'test_4_0_0_2', 'test_4_0_0_3']
+ *                ,test_4_0_1: ['true THEN true END AS test_4_0_1) AS test; SELECT current_user--']
+ *                ,test_41_0_0: ['test_41_0_0', 'test_41_0_0_2', 'test_41_0_0_3']
+ *                ,test_42_0_0: ['test_42_0_0', 'test_42_0_0_2', 'test_42_0_0_3']
+ *                ,test_43_0_0: ['test_43_0_0', 'test_43_0_0_2', 'test_43_0_0_3']
+ *                ,test_4_1_0: 'test_4_1_0'
+ *                ,test_4_1_2: ['test_4_1_2']
+ *                ,test_4_1_3: ['test_4_1_3', 'test_4_1_3_2', 'test_4_1_3_3']
+ *                ,test_4_1_4: ['test_4_1_4', 'test_4_1_4_2', 'test_4_1_4_3']
+ *                ,test_4_1_42: 'test_4_1_42'
+ *                ,test_4_1_5: ['test_4_1_5', 'test_4_1_5_2', 'test_4_1_5_3']
+ *                ,test_4_1_52: ['test_4_1_52']
+ *                ,test_4_1_6: ['test_4_1_6', 'test_4_1_6_2', 'test_4_1_6_3']
+ *                ,test_4_1_62: ['test_4_1_62', 'test_4_1_62_2', 'test_4_1_62_3']
+ *                ,test_4_1_7: [1]
+ *                ,test_4_1_8: [true]
+ *                ,test_4_2_0: 'test_4_2_0'
+ *                ,test_4_2_2: ['test_4_2_2']
+ *                ,test_4_2_3: ['test_4_2_3', 'test_4_2_3_2', 'test_4_2_3_3']
+ *                ,test_4_2_4: ['test_4_2_4', 'test_4_2_4_2', 'test_4_2_4_3']
+ *                ,test_4_2_42: 'test_4_2_42'
+ *                ,test_4_2_5: ['test_4_2_5', 'test_4_2_5_2', 'test_4_2_5_3']
+ *                ,test_4_2_52: ['test_4_2_52']
+ *                ,test_4_2_6: ['test_4_2_6', 'test_4_2_6_2', 'test_4_2_6_3']
+ *                ,test_4_2_62: ['test_4_2_62', 'test_4_2_62_2', 'test_4_2_62_3']
+ *                ,test_4_3_0: ['test_4_3_0']
+ *                ,test_4_3_01: 'test_4_3_01'
+ *                ,test_4_3_1: ['test_4_3_1']
+ *                ,test_4_3_2: ['test_4_3_2']
+ *                ,test_4_3_21: null
+ *                ,test_4_3_3: ['test_4_3_3']
+ *                ,test_4_3_31: ''
+ *                ,test_4_4_0: ['test_4_4_0']
+ *                ,test_4_4_01: 'test_4_4_01'
+ *                ,test_4_4_1: ['test_4_4_1']
+ *                ,test_4_4_2: ['test_4_4_2']
+ *                ,test_4_4_21: null
+ *                ,test_4_4_3: ['test_4_4_3']
+ *                ,test_4_4_31: ''
+ *                ,test_4_5_0: ['test_4_5_0']
+ *                ,test_4_5_1: ['test_4_5_1', 'test_4_5_1_2']
+ *                ,test_4_5_2: ['test_4_5_2', 'test_4_5_2_2']
+ *                ,test_4_5_3: ['test_4_5_3']
+ *                ,test_4_5_32: 'test_4_5_32'
+ *                ,test_4_5_4: ['test_4_5_4']
+ *                ,test_4_6_0: ['test_4_6_0']
+ *                ,test_4_6_1: ['test_4_6_1', 'test_4_6_1_2']
+ *                ,test_4_6_2: ['test_4_6_2', 'test_4_6_2_2']
+ *                ,test_4_6_3: ['test_4_6_3']
+ *                ,test_4_6_32: 'test_4_6_32'
+ *                ,test_4_6_4: ['test_4_6_4']
+ *                ,test_4_7_0: ['test_4_7_0', 'test_4_7_0_2', 'test_4_7_0_3']
+ *                ,test_4_8_0: ['test_4_8_0', 'test_4_8_0_2', 'test_4_8_0_3']
+ *                ,test_44_0_0: ['test_44_0_0', 'test_44_0_0_2']
+ *                ,test_44_0_02: ['test_44_0_02', 'test_44_0_02_2']
+ *                ,test_44_0_1: ['test_44_0_1', 'test_44_0_1_2']
+ *                ,test_441_0_0: ['test_441_0_0', 'test_441_0_0_2']
+ *                ,test_441_0_02: ['test_441_0_02', 'test_441_0_02_2']
+ *                ,test_442_0_0: ['test_442_0_0', 'test_442_0_0_2']
+ *                ,test_442_0_02: ['test_442_0_02', 'test_442_0_02_2']
+ *                ,test_443_0_0: ['test_443_0_0', 'test_443_0_0_2', 'test_443_0_0_3']
+ *                ,test_443_0_02: ['test_443_0_02', 'test_443_0_02_2', 'test_443_0_02_3']
+ *                ,test_444_0_0: ['test_444_0_0', 'test_444_0_0_2']
+ *                ,test_444_0_02: ['test_444_0_02', 'test_444_0_01_2']
+ *                ,test_444_0_03: ['test_444_0_03', 'test_444_0_01_3']
+ *                ,end: true
+ *              }
+ *
+ * The query tests are named following this convention from the MetaSQL docs:
+ * @See: http://www.xtuple.org/node/270
+ *
+ * Control Statements (#.x.x):
+ * - none             (0.x.x)
+ * - if               (1.x.x)
+ * - else             (2.x.x)
+ * - elseif           (3.x.x)
+ * - foreach          (4.x.x)
+ *
+ * Functions          (x.#.x):
+ * - value            (x.1.x)
+ * - literal          (x.2.x)
+ * - exists           (x.3.x)
+ * - reExists         (x.4.x)
+ * - isFirst          (x.5.x)
+ * - isLast           (x.6.x)
+ * - continue         (x.7.x)
+ * - break            (x.8.x)
+ *
+ * Function Logic     (x.x.#):
+ * - Addresses expected logic function within the above functions calls such as
+ *   what the expected outcome is when certain conditions exists or parameters
+ *   are passed.
+ *
+ * All tests have a column that corresponds to the test name. e.g. Test "0.1.3"
+ * has a column named "valid_0_1_3". Each column's value should be true if the
+ * tests pass. Any column with a value of false means that test failed.
+ */
+SELECT
+  thestart
+  ,test_0_1_0 AS valid_0_1_0
+  ,test_0_1_1 AS valid_0_1_1
+  ,test_0_1_2 AS valid_0_1_2
+  ,test_0_1_3 AS valid_0_1_3
+  ,test_0_1_4 AS valid_0_1_4
+  ,CASE WHEN test_0_2_0 = 'test_0_2_0' THEN true ELSE false END AS valid_0_2_0
+  ,CASE WHEN test_0_2_1 = '''test_0_2_1''' THEN true ELSE false END AS valid_0_2_1
+  ,CASE WHEN test_0_2_2 = 'test_0_2_2' THEN true ELSE false END AS valid_0_2_2
+  ,CASE WHEN test_0_2_3 = 'test_0_2_3' THEN true ELSE false END AS valid_0_2_3
+  -- TODO: This currently fails in the Qt MetaSQL parser and is something we should fix in the javascript parser.
+  --,CASE WHEN test_0_2_4 = 'test_0_2_4' THEN true ELSE false END AS valid_0_2_4
+  ,CASE WHEN test_0_2_4 = 'test_0_2_4' THEN false ELSE true END AS todo_0_2_4
+  ,test_0_3_0 AS valid_0_3_0
+  ,CASE WHEN test_0_3_1 THEN false ELSE true END AS valid_0_3_1
+  ,test_0_3_2 AS valid_0_3_2
+  ,test_0_3_3 AS valid_0_3_3
+  ,test_0_3_4 AS valid_0_3_4
+  ,test_0_4_0 AS valid_0_4_0
+  ,CASE WHEN test_0_4_1 = '''test_0_4_1''' THEN true ELSE false END AS valid_0_4_1
+  ,test_0_4_2 AS valid_0_4_2
+  ,test_0_4_3 AS valid_0_4_3
+  ,test_0_4_4 AS valid_0_4_4
+  ,test_0_5_0 AS valid_0_5_0
+  ,test_0_5_1 AS valid_0_5_1
+  ,test_0_5_2 AS valid_0_5_2
+  ,test_0_5_3 AS valid_0_5_3
+  ,test_0_5_4 AS valid_0_5_4
+  ,test_0_6_0 AS valid_0_6_0
+  ,CASE WHEN test_0_6_1 THEN false ELSE true END AS valid_0_6_1
+  ,CASE WHEN test_0_6_2 THEN false ELSE true END AS valid_0_6_2
+  ,CASE WHEN test_0_6_3 THEN false ELSE true END AS valid_0_6_3
+  ,test_0_6_4 AS valid_0_6_4
+  ,CASE WHEN test_0_7_0 = '''test_0_7_0''' THEN true ELSE false END AS valid_0_7_0
+  ,CASE WHEN test_0_7_1 = '''test_0_7_1''' THEN true ELSE false END AS valid_0_7_1
+  ,CASE WHEN test_0_8_0 = '''test_0_8_0''' THEN true ELSE false END AS valid_0_8_0
+  ,CASE WHEN test_0_8_1 = '''test_0_8_1''' THEN true ELSE false END AS valid_0_8_1
+  ,test_1_3_0 AS valid_1_3_0
+  ,test_1_3_1 AS valid_1_3_1
+  ,test_2_3_0 AS valid_2_3_0
+  ,test_2_3_1 AS valid_2_3_1
+  ,test_2_3_0_2 AS valid_2_3_0_2
+  ,test_3_3_0 AS valid_3_3_0
+  ,test_3_3_0_2 AS valid_3_3_0_2
+  ,test_3_3_0_3 AS valid_3_3_0_3
+  ,test_3_3_1 AS valid_3_3_1
+  ,test_3_3_2 AS valid_3_3_2
+  ,CASE WHEN test_4_0_0::text = 'test_4_0_0test_4_0_0test_4_0_0'::text
+    THEN true
+    ELSE false
+  END AS valid_4_0_0
+  ,CASE WHEN test_4_0_1::text = 'test_4_0_1'::text THEN true ELSE false END AS valid_4_0_1
+  ,CASE WHEN test_41_0_0::text = 'test_41_0_0test_41_0_0test_41_0_0'::text
+    THEN true
+    ELSE false
+  END AS valid_41_0_0
+  ,CASE WHEN test_42_0_0::text = 'test_42_0_0test_42_0_0test_42_0_0'::text
+    THEN true
+    ELSE false
+  END AS valid_42_0_0
+  ,CASE WHEN test_43_0_0::text = 'test_43_0_0test_43_0_0test_43_0_0'::text
+    THEN true
+    ELSE false
+  END AS valid_43_0_0
+  ,CASE WHEN test_4_1_0::text = ''::text
+    THEN true
+    ELSE false
+  END AS valid_4_1_0
+  ,CASE WHEN test_4_1_1::text= ''::text
+    THEN true
+    ELSE false
+  END AS valid_4_1_1
+  ,CASE WHEN test_4_1_2::text = 'test_4_1_2'::text
+    THEN true
+    ELSE false
+  END AS valid_4_1_2
+  ,CASE WHEN test_4_1_3::text = 'test_4_1_3test_4_1_3_2test_4_1_3_3'::text
+    THEN true
+    ELSE false
+  END AS valid_4_1_3
+  ,CASE WHEN test_4_1_4::text = 'test_4_1_42test_4_1_42test_4_1_42'::text
+    THEN true
+    ELSE false
+  END AS valid_4_1_4
+  ,CASE WHEN test_4_1_5::text = 'test_4_1_52test_4_1_52test_4_1_52'::text
+    THEN true
+    ELSE false
+  END AS valid_4_1_5
+  ,CASE WHEN test_4_1_6::text = 'test_4_1_62test_4_1_62test_4_1_62'::text
+    THEN true
+    ELSE false
+  END AS valid_4_1_6
+  ,CASE WHEN test_4_1_7 = 1
+    THEN true
+    ELSE false
+  END AS valid_4_1_7
+  ,CASE WHEN test_4_1_8
+    THEN true
+    ELSE false
+  END AS valid_4_1_8
+  ,CASE WHEN test_4_2_0::text = ''::text
+    THEN true
+    ELSE false
+  END AS valid_4_2_0
+  ,CASE WHEN test_4_2_1::text = ''::text
+    THEN true
+    ELSE false
+  END AS valid_4_2_1
+  ,CASE WHEN test_4_2_2::text = 'test_4_2_2'::text
+    THEN true
+    ELSE false
+  END AS valid_4_2_2
+  ,CASE WHEN test_4_2_3test_4_2_3_2test_4_2_3_3::text = 'test_4_2_3'::text
+    THEN true
+    ELSE false
+  END AS valid_4_2_3
+  ,CASE WHEN test_4_2_42test_4_2_42test_4_2_42::text = 'test_4_2_4'::text
+    THEN true
+    ELSE false
+  END AS valid_4_2_4
+  ,CASE WHEN test_4_2_52test_4_2_52test_4_2_52::text = 'test_4_2_5'::text
+    THEN true
+    ELSE false
+  END AS valid_4_2_5
+  ,CASE WHEN test_4_2_62test_4_2_62test_4_2_62::text = 'test_4_2_6'::text
+    THEN true
+    ELSE false
+  END AS valid_4_2_6
+  ,CASE WHEN test_4_3_0
+    THEN true
+    ELSE false
+  END AS valid_4_3_0
+  ,CASE WHEN test_4_3_1
+    THEN false
+    ELSE true END
+  AS valid_4_3_1
+  ,CASE WHEN test_4_3_2
+    THEN true
+    ELSE false
+  END AS valid_4_3_2
+  ,CASE WHEN test_4_3_3
+    THEN true
+    ELSE false
+  END AS valid_4_3_3
+  ,CASE WHEN test_4_4_0
+    THEN true
+    ELSE false
+  END AS valid_4_4_0
+  ,CASE WHEN test_4_4_1::text = ''::text
+    THEN true
+    ELSE false END
+  AS valid_4_4_1
+  ,CASE WHEN test_4_4_2
+    THEN true
+    ELSE false
+  END AS valid_4_4_2
+  ,CASE WHEN test_4_4_3
+    THEN true
+    ELSE false
+  END AS valid_4_4_3
+  ,CASE WHEN test_4_5_0
+    THEN true
+    ELSE false END
+  AS valid_4_5_0
+  ,CASE WHEN test_4_5_1
+    THEN true
+    ELSE false END
+  AS valid_4_5_1
+  ,CASE WHEN test_4_5_2
+    THEN true
+    ELSE false END
+  AS valid_4_5_2
+  ,CASE WHEN test_4_5_3
+    THEN true
+    ELSE false END
+  AS valid_4_5_3
+  ,CASE WHEN test_4_5_4
+    THEN true
+    ELSE false END
+  AS valid_4_5_4
+  ,CASE WHEN test_4_6_0
+    THEN true
+    ELSE false END
+  AS valid_4_6_0
+  ,CASE WHEN test_4_6_1
+    THEN true
+    ELSE false END
+  AS valid_4_6_1
+  ,CASE WHEN test_4_6_2
+    THEN true
+    ELSE false END
+  AS valid_4_6_2
+  ,CASE WHEN test_4_6_3
+    THEN true
+    ELSE false END
+  AS valid_4_6_3
+  ,CASE WHEN test_4_6_4
+    THEN true
+    ELSE false END
+  AS valid_4_6_4
+  -- TODO: This currently fails in the Qt MetaSQL parser and is something we should fix in the javascript parser.
+  --,CASE WHEN test_4_7_0::text = 'test_4_7_0test_4_7_0test_4_7_0'::text
+  --  THEN true
+  --  ELSE false
+  --END AS valid_4_7_0
+  ,CASE WHEN test_4_7_0::text = 'test_4_7_0test_4_7_0test_4_7_0'::text
+    THEN false
+    ELSE true
+  END AS todo_4_7_0
+  -- TODO: This currently fails in the Qt MetaSQL parser and is something we should fix in the javascript parser.
+  --,CASE WHEN test_4_8_0::text = 'test_4_8_0'::text
+  --  THEN true
+  --  ELSE false
+  --END AS valid_4_8_0
+  ,CASE WHEN test_4_8_0::text = 'test_4_8_0'::text
+    THEN false
+    ELSE true
+  END AS todo_4_8_0
+  ,CASE WHEN test_44_0_0::text = 'test_44_0_0test_44_0_02test_44_0_02test_44_0_0test_44_0_02test_44_0_02'::text
+    THEN true
+    ELSE false END
+  AS valid_44_0_0
+  ,CASE WHEN test_44_0_1::text = 'test_44_0_1test_44_0_1test_44_0_1test_44_0_1test_44_0_1test_44_0_1'::text
+    THEN true
+    ELSE false END
+  AS valid_44_0_1
+  ,CASE WHEN test_441_0_0::text = 'test_441_0_0test_441_0_02test_441_0_02test_441_0_0test_441_0_02test_441_0_02'::text
+    THEN true
+    ELSE false END
+  AS valid_441_0_0
+  ,CASE WHEN test_442_0_0::text = 'isFirstisFirsttest_442_0_02test_442_0_0isFirsttest_442_0_02'::text
+    THEN true
+    ELSE false END
+  AS valid_442_0_0
+  ,CASE WHEN test_443_0_0::text = 'isFirstisFirsttest_443_0_02isLasttest_443_0_0isFirsttest_443_0_02isLastisLastisFirsttest_443_0_02isLast'::text
+    THEN true
+    ELSE false END
+  AS valid_443_0_0
+  ,CASE WHEN test_444_0_0::text = 'test_444_0_0test_444_0_02test_444_0_03test_444_0_03test_444_0_02test_444_0_03test_444_0_03test_444_0_0test_444_0_02test_444_0_03test_444_0_03test_444_0_02test_444_0_03test_444_0_03'::text
+    THEN true
+    ELSE false END
+  AS valid_444_0_0
+  ,theend
+FROM (
+  SELECT
+    -- Placeholder so all columns below can start with a comma.
+    true AS thestart
+
+    -- Test 0.1.0 - value with a parameter.
+    -- Expected: parameter value
+    ,CASE WHEN <? value("test_0_1_0") ?> = 'test_0_1_0' THEN true ELSE false END AS test_0_1_0
+
+    -- Test 0.1.1 - value with a parameter that does not exist.
+    -- Expected: NULL
+    ,CASE WHEN <? value("not_exist") ?> IS NULL THEN true ELSE false END AS test_0_1_1
+
+    -- Test 0.1.2 - value with a list of one item.
+    -- Expected: first list item value
+    ,CASE WHEN <? value("test_0_1_2") ?> = 'test_0_1_2' THEN true ELSE false END AS test_0_1_2
+
+    -- Test 0.1.3 - value with a list of more than one item.
+    -- Expected: first list item value
+    ,CASE WHEN <? value("test_0_1_3") ?> = 'test_0_1_3' THEN true ELSE false END AS test_0_1_3
+
+    -- Test 0.1.4 - value SQL injection is quoted.
+    -- Expected: quoted value
+    ,CASE WHEN <? value("test_0_1_4") ?> = 'true THEN true END AS test_0_1_4) AS tests; SELECT current_user--'
+      THEN true
+      ELSE false
+    END AS test_0_1_4
+
+    -- Test 0.2.0 - literal with a parameter.
+    -- Expected: parameter literal
+    ,'test_0_2_0'::text AS <? literal("test_0_2_0") ?>
+
+    -- Test 0.2.1 - literal with a parameter that does not exist.
+    -- Expected: literal returns nothing and will not break this
+    ,quote_literal('test_0_2_1'::text || ''<? literal("not_exist") ?>) AS test_0_2_1
+
+    -- Test 0.2.2 - literal with a list of one item.
+    -- Expected: first list item literal
+    ,'test_0_2_2'::text AS <? literal("test_0_2_2") ?>
+
+    -- Test 0.2.3 - literal with a list of more than one item.
+    -- Expected: first list item literal
+    ,'test_0_2_3'::text AS <? literal("test_0_2_3") ?>
+
+    -- Test 0.2.4 - literal SQL injection.
+    -- Expected: fails
+    -- TODO: This currently fails in the Qt MetaSQL parser and is something we should fix in the javascript parser.
+    ,quote_literal('test_0_2_4'::text || <? literal("test_0_2_4") ?>) AS test_0_2_4
+
+    -- Test 0.3.0 - exists with a parameter does exist.
+    -- Expected: TRUE
+    ,<? exists("test_0_3_0") ?> AS test_0_3_0
+
+    -- Test 0.3.1 - exists with a parameter does not exist.
+    -- Expected: FALSE
+    ,<? exists("not_exist") ?> AS test_0_3_1
+
+    -- Test 0.3.2 - exists with a parameter does exist, but is NULL.
+    -- Expected: TRUE
+    ,<? exists("test_0_3_2") ?> AS test_0_3_2
+
+    -- Test 0.3.3 - exists with a parameter does exist, but is ''.
+    -- Expected: TRUE
+    ,<? exists("test_0_3_3") ?> AS test_0_3_3
+
+    -- Test 0.3.4 - exists SQL injection.
+    -- Expected: TRUE - SQLi fails
+    ,CASE WHEN <? exists("test_0_3_4") ?> THEN true ELSE false END AS test_0_3_4
+
+    -- Test 0.4.0 - reExists with a pattern for a parameter does exist.
+    -- Expected: TRUE
+    ,<? reExists("^test_0_4_0.*") ?> AS test_0_4_0
+
+    -- Test 0.4.1 - reExists with a pattern for a parameter does not exist.
+    -- Expected: reExists returns nothing and will not break this
+    ,quote_literal('test_0_4_1'::text || ''<? reExists("^not_exist.*") ?>) AS test_0_4_1
+
+    -- Test 0.4.2 - reExists with a pattern for a parameter does exist, but is
+    -- NULL.
+    -- Expected: TRUE
+    ,<? reExists("^test_0_4_2.*") ?> AS test_0_4_2
+
+    -- Test 0.4.3 - reExists with a pattern for a parameter does exist, but is ''.
+    -- Expected: TRUE
+    ,<? reExists("^test_0_4_3.*") ?> AS test_0_4_3
+
+    -- Test 0.4.4 - reExists SQL injection.
+    -- Expected: TRUE - SQLi fails
+    ,CASE WHEN <? reExists("^test_0_4_4.*") ?> THEN true ELSE false END AS test_0_4_4
+
+    -- Test 0.5.0 - isFirst with a list of one item.
+    -- Expected: TRUE
+    ,<? isFirst("test_0_5_0") ?> AS test_0_5_0
+
+    -- Test 0.5.1 - isFirst with a list of more than one item.
+    -- Expected: TRUE
+    ,<? isFirst("test_0_5_1") ?> AS test_0_5_1
+
+    -- Test 0.5.2 - isFirst not a list, but parameter does exist.
+    -- Expected: TRUE
+    ,<? isFirst("test_0_5_2") ?> AS test_0_5_2
+
+    -- Test 0.5.3 - isFirst with a parameter that does not exist.
+    -- Expected: TRUE - because this is outside a foreach loop
+    ,<? isFirst("not_exist") ?> AS test_0_5_3
+
+    -- Test 0.5.4 - isFirst list of one item SQL injection.
+    -- Expected: TRUE - SQLi fails
+    ,CASE WHEN <? isFirst("test_0_5_4") ?> THEN true ELSE false END AS test_0_5_4
+
+    -- Test 0.6.0 - isLast with a list of one item.
+    -- Expected: TRUE
+    ,<? isLast("test_0_6_0") ?> AS test_0_6_0
+
+    -- Test 0.6.1 - isLast with a list of more than one item.
+    -- Expected: FALSE
+    ,<? isLast("test_0_6_1") ?> AS test_0_6_1
+
+    -- Test 0.6.2 - isLast not a list, but parameter does exist.
+    -- Expected: FALSE
+    ,<? isLast("test_0_6_2") ?> AS test_0_6_2
+
+    -- Test 0.6.3 - isLast with a parameter that does not exist.
+    -- Expected: FALSE
+    ,<? isLast("not_exist") ?> AS test_0_6_3
+
+    -- Test 0.6.4 - isLast list of one item SQL injection.
+    -- Expected: TRUE - SQLi fails
+    ,CASE WHEN <? isLast("test_0_6_4") ?> THEN true ELSE false END AS test_0_6_4
+
+    -- Test 0.7.0 - continue.
+    -- Expected: continue does nothing and will not break this
+    ,quote_literal('test_0_7_0'::text || ''<? continue ?>) AS test_0_7_0
+
+    -- Test 0.7.1 - continue when a number is specified.
+    -- Expected: continue does nothing and will not break this
+    ,quote_literal('test_0_7_1'::text || ''<? continue(2) ?>) AS test_0_7_1
+
+    -- Test 0.8.0 - break.
+    -- Expected: break does nothing and will not break this
+    ,quote_literal('test_0_8_0'::text || ''<? break ?>) AS test_0_8_0
+
+    -- Test 0.8.1 - break when a number is specified.
+    -- Expected: break does nothing and will not break this
+    ,quote_literal('test_0_8_1'::text || ''<? break(2) ?>) AS test_0_8_1
+
+    -- Test 1.3.0 - basic if.
+    -- Expected: if works
+    <? if exists("test_1_3_0") ?>
+    ,true AS test_1_3_0
+    <? endif ?>
+
+    -- Test 1.3.1 - nested if.
+    -- Expected: if works
+    <? if exists("test_1_3_1") ?>
+      <? if exists("test_1_3_1_2") ?>
+      ,true AS test_1_3_1
+      <? endif ?>
+    <? endif ?>
+
+    -- Test 2.3.0 - if and else.
+    -- Expected: if and else works
+    <? if exists("test_2_3_0") ?> -- test_2_3_0 does exists, if returns true.
+    ,true AS test_2_3_0
+    <? else ?>
+    ,false AS test_2_3_0
+    <? endif ?>
+
+    <? if exists("not_exist") ?> -- does not exists, else returns true.
+    ,false AS test_2_3_0_2
+    <? else ?>
+    ,true AS test_2_3_0_2
+    <? endif ?>
+
+    -- Test 2.3.1 - nested if and else.
+    -- Expected: if and else works
+    <? if exists("test_2_3_1") ?> -- test_2_3_1 does exists, if returns true.
+      <? if exists("not_exist") ?> -- does not exists, else returns true.
+      ,false AS test_2_3_1
+      <? else ?>
+      ,true AS test_2_3_1
+      <? endif ?>
+    <? else ?>
+    ,false AS test_2_3_1
+    <? endif ?>
+
+    -- Test 3.3.0 - if, elseif and else.
+    -- Expected: if, elseif and else works
+    <? if exists("test_3_3_0") ?> -- test_3_3_0 does exists, if returns true.
+    ,true AS test_3_3_0
+    <? elseif exists("not_exist") ?>
+    ,false AS test_3_3_0
+    <? else ?>
+    ,false AS test_3_3_0
+    <? endif ?>
+
+    <? if exists("not_exist") ?> -- does not exists, elseif returns true.
+    ,false AS test_3_3_0_2
+    <? elseif exists("test_3_3_0") ?>
+    ,true AS test_3_3_0_2
+    <? else ?>
+    ,false AS test_3_3_0_2
+    <? endif ?>
+
+    <? if exists("not_exist") ?> -- does not exists, else returns true.
+    ,false AS test_3_3_0_3
+    <? elseif exists("not_exist") ?>
+    ,false AS test_3_3_0_3
+    <? else ?>
+    ,true AS test_3_3_0_3
+    <? endif ?>
+
+    -- Test 3.3.1 - if, multiple elseif and else.
+    -- Expected: if, elseif and else works
+    <? if exists("not_exist") ?> -- does not exists, last elseif returns true.
+    ,false AS test_3_3_1
+    <? elseif exists("not_exist") ?>
+    ,false AS test_3_3_1
+    <? elseif exists("not_exist") ?>
+    ,false AS test_3_3_1
+    <? elseif exists("test_3_3_1") ?>
+    ,true AS test_3_3_1
+    <? else ?>
+    ,false AS test_3_3_1
+    <? endif ?>
+
+    -- Test 3.3.2 - nested if, elseif and else.
+    -- Expected: if, elseif and else works
+    <? if exists("not_exist") ?> -- does not exists, elseif returns true.
+    ,false AS test_3_3_2
+    <? elseif exists("test_3_3_2") ?>
+      <? if exists("not_exist") ?> -- does not exists, elseif returns true.
+      ,false AS test_3_3_2
+      <? elseif exists("test_3_3_2") ?>
+      ,true AS test_3_3_2
+      <? else ?>
+      ,false AS test_3_3_2
+      <? endif ?>
+    <? else ?>
+    ,false AS test_3_3_2
+    <? endif ?>
+
+    -- Test 4.0.0 - basic foreach.
+    -- Expected: loops parameter value three times
+    ,<? foreach("test_4_0_0") ?>
+      'test_4_0_0'
+    <? endforeach ?> AS test_4_0_0
+
+    -- Test 4.0.1 - basic foreach SQL injection.
+    -- Expected: parameter value three times SQL injection fails
+    ,<? foreach("test_4_0_1") ?>
+      'test_4_0_1'
+    <? endforeach ?> AS test_4_0_1
+
+    -- Test 41.0.0 - foreach with basic if.
+    -- Expected: loops parameter value three times and if works
+    ,<? foreach("test_41_0_0") ?>
+      <? if exists("test_41_0_0") ?>
+      'test_41_0_0'
+      <? endif ?>
+    <? endforeach ?> AS test_41_0_0
+
+    -- Test 42.0.0 - foreach with if and else.
+    -- Expected: loops parameter value three times and if and else works
+    ,<? foreach("test_42_0_0") ?>
+      <? if exists("not_exist") ?>
+      'error'
+      <? else ?>
+      'test_42_0_0'
+      <? endif ?>
+    <? endforeach ?> AS test_42_0_0
+
+    -- Test 43.0.0 - foreach with if, elseif and else.
+    -- Expected: loops parameter value three times and if, elseif and else works
+    ,<? foreach("test_43_0_0") ?>
+      <? if exists("not_exist") ?>
+      'error'
+      <? elseif exists("test_43_0_0") ?>
+      'test_43_0_0'
+      <? else ?>
+      'error'
+      <? endif ?>
+    <? endforeach ?> AS test_43_0_0
+
+    -- Test 4.1.0 - value called inside a foreach block looping on this parameter
+    -- with a parameter.
+    -- Expected: Nothing is added to the empty string
+    ,''<? foreach("test_4_1_0") ?>
+      <? value("test_4_1_0") ?>
+    <? endforeach ?> AS test_4_1_0
+
+    -- Test 4.1.1 - value called inside a foreach block looping on this parameter
+    -- with a parameter that does not exist.
+    -- Expected: Nothing is added to the empty string
+    ,''<? foreach("not_exist") ?>
+      <? value("not_exist") ?>
+    <? endforeach ?> AS test_4_1_1
+
+    -- Test 4.1.2 - value called inside a foreach block looping on this parameter
+    -- with a list of one item.
+    -- Expected: first list item value once
+    ,<? foreach("test_4_1_2") ?>
+      <? value("test_4_1_2") ?>
+    <? endforeach ?> AS test_4_1_2
+
+    -- Test 4.1.3 - value called inside a foreach block looping on this parameter
+    -- with a list of more than one item.
+    -- Expected: loop indexed list item value
+    ,<? foreach("test_4_1_3") ?>
+      <? value("test_4_1_3") ?>
+    <? endforeach ?> AS test_4_1_3
+
+    -- Test 4.1.4 - value called inside a foreach block not looping on this
+    -- parameter with a parameter.
+    -- Expected: parameter value three times
+    ,<? foreach("test_4_1_4") ?>
+      <? value("test_4_1_42") ?>
+    <? endforeach ?> AS test_4_1_4
+
+    -- Test 4.1.5 - value called inside a foreach block not looping on this
+    -- parameter with a list of one item.
+    -- Expected: first list item value three times
+    ,<? foreach("test_4_1_5") ?>
+      <? value("test_4_1_52") ?>
+    <? endforeach ?> AS test_4_1_5
+
+    -- Test 4.1.6 - value called inside a foreach block not looping on this
+    -- parameter with a list of more than one item.
+    -- Expected: first list item value three times
+    ,<? foreach("test_4_1_6") ?>
+      <? value("test_4_1_62") ?>
+    <? endforeach ?> AS test_4_1_6
+
+    -- Test 4.1.7 - value called inside a foreach block looping on this parameter
+    -- with a list of one integer.
+    -- Expected: first list item value once
+    ,<? foreach("test_4_1_7") ?><? value("test_4_1_7") ?><? endforeach ?> AS test_4_1_7
+
+    -- Test 4.1.8 - value called inside a foreach block looping on this parameter
+    -- with a list of one boolean.
+    -- Expected: first list item value once
+    ,<? foreach("test_4_1_8") ?>
+      <? value("test_4_1_8") ?>
+    <? endforeach ?> AS test_4_1_8
+
+    -- Test 4.2.0 - literal called inside a foreach block looping on this parameter
+    -- with a parameter.
+    -- Expected: Nothing is added to the empty string
+    ,''<? foreach("test_4_2_0") ?>
+      <? literal("test_4_2_0") ?>
+    <? endforeach ?> AS test_4_2_0
+
+    -- Test 4.2.1 - literal called inside a foreach block looping on this parameter
+    -- with a parameter that does not exist.
+    -- Expected: Nothing is added to the empty string
+    ,''<? foreach("not_exist") ?>
+      <? literal("not_exist") ?>
+    <? endforeach ?> AS test_4_2_1
+
+    -- Test 4.2.2 - literal called inside a foreach block looping on this parameter
+    -- with a list of one item.
+    -- Expected: first list item literal
+    <? foreach("test_4_2_2") ?>
+      ,'test_4_2_2' AS <? literal("test_4_2_2") ?>
+    <? endforeach ?>
+
+    -- Test 4.2.3 - literal called inside a foreach block looping on this parameter
+    -- with a list of more than one item.
+    -- Expected: loop indexed list item literal name concatenated together
+    ,'test_4_2_3' AS <? foreach("test_4_2_3") ?><? literal("test_4_2_3") ?><? endforeach ?>
+
+    -- Test 4.2.4 - literal called inside a foreach block not looping on this
+    -- parameter with a parameter.
+    -- Expected: parameter literal three times concatenated together
+    ,'test_4_2_4' AS <? foreach("test_4_2_4") ?><? literal("test_4_2_42") ?><? endforeach ?>
+
+    -- Test 4.2.5 - literal called inside a foreach block not looping on this
+    -- parameter with a list of one item.
+    -- Expected: parameter literal three times concatenated together
+    ,'test_4_2_5' AS <? foreach("test_4_2_5") ?><? literal("test_4_2_52") ?><? endforeach ?>
+
+    -- Test 4.2.6 - literal called inside a foreach block not looping on this
+    -- parameter with a list of more than one item.
+    -- Expected: first parameter literal three times concatenated together
+    ,'test_4_2_6' AS <? foreach("test_4_2_6") ?><? literal("test_4_2_62") ?><? endforeach ?>
+
+    -- Test 4.3.0 - exists called inside a foreach block with a parameter does
+    -- exist.
+    -- Expected: TRUE
+    ,<? foreach("test_4_3_0") ?>
+      <? exists("test_4_3_01") ?>
+    <? endforeach ?> AS test_4_3_0
+
+    -- Test 4.3.1 - exists called inside a foreach block with a parameter does
+    -- not exist.
+    -- Expected: FALSE
+    ,<? foreach("test_4_3_1") ?>
+      <? exists("not_exist") ?>
+    <? endforeach ?> AS test_4_3_1
+
+    -- Test 4.3.2 - exists called inside a foreach block with a parameter does
+    -- exist, but is NULL.
+    -- Expected: TRUE
+    ,<? foreach("test_4_3_2") ?>
+      <? exists("test_4_3_21") ?>
+    <? endforeach ?> AS test_4_3_2
+
+    -- Test 4.3.3 - exists called inside a foreach block with a parameter does
+    -- exist, but is ''.
+    -- Expected: TRUE
+    ,<? foreach("test_4_3_3") ?>
+      <? exists("test_4_3_31") ?>
+    <? endforeach ?> AS test_4_3_3
+
+    -- Test 4.4.0 - reExists called inside a foreach block with a pattern for a
+    -- parameter does exist.
+    -- Expected: TRUE
+    ,<? foreach("test_4_4_0") ?>
+      <? reExists("^test_4_4_0.*") ?>
+    <? endforeach ?> AS test_4_4_0
+
+    -- Test 4.4.1 - reExists called inside a foreach block with a pattern for a
+    -- parameter does not exist.
+    -- Expected: reExists returns nothing and will not break this
+    ,''<? foreach("test_4_4_1") ?>
+      <? reExists("^not_exist.*") ?>
+    <? endforeach ?> AS test_4_4_1
+
+    -- Test 4.4.2 - reExists called inside a foreach block with a pattern for a
+    -- parameter does exist, but is NULL.
+    -- Expected: TRUE
+    ,<? foreach("test_4_4_2") ?>
+      <? reExists("^test_4_4_2.*") ?>
+    <? endforeach ?> AS test_4_4_2
+
+    -- Test 4.4.3 - reExists called inside a foreach block with a pattern for a
+    -- parameter does exist, but is ''.
+    -- Expected: TRUE
+    ,<? foreach("test_4_4_3") ?>
+      <? reExists("^test_4_4_3.*") ?>
+    <? endforeach ?> AS test_4_4_3
+
+    -- Test 4.5.0 - isFirst called inside a foreach block with a list of one item.
+    -- Expected: isFirst returns TRUE, this returns TRUE
+    ,<? foreach("test_4_5_0") ?>
+      <? isFirst("test_4_5_0") ?>
+    <? endforeach ?> AS test_4_5_0
+
+    -- Test 4.5.1 - isFirst called inside a foreach block with a list first item.
+    -- Expected: isFirst returns TRUE, this returns TRUE
+    ,<? foreach("test_4_5_1") ?>
+      <? if isFirst("test_4_5_1") ?>
+        true
+      <? endif ?>
+    <? endforeach ?> AS test_4_5_1
+
+    -- Test 4.5.2 - isFirst called inside a foreach block not a list first item.
+    -- Expected: isFirst returns FALSE, this returns TRUE
+    ,<? foreach("test_4_5_2") ?>
+      <? if isFirst("test_4_5_2") ?>
+      <? else ?>
+        true
+      <? endif ?>
+    <? endforeach ?> AS test_4_5_2
+
+    -- Test 4.5.3 - isFirst called inside a foreach block not a list, but parameter
+    -- does exist.
+    -- Expected: isFirst returns TRUE, this returns TRUE
+    ,<? foreach("test_4_5_3") ?>
+      <? if isFirst("test_4_5_32") ?>
+        true
+      <? else ?>
+        false
+      <? endif ?>
+    <? endforeach ?> AS test_4_5_3
+
+    -- Test 4.5.4 - isFirst called inside a foreach block with a parameter that
+    -- does not exist.
+    -- Expected: isFirst returns TRUE, this returns TRUE
+    ,<? foreach("test_4_5_4") ?>
+      <? if isFirst("not_exist") ?>
+        true
+      <? else ?>
+        false
+      <? endif ?>
+    <? endforeach ?> AS test_4_5_4
+
+    -- Test 4.6.0 - isLast called inside a foreach block with a list of one item.
+    -- Expected: isLast returns TRUE, this returns TRUE
+    ,<? foreach("test_4_6_0") ?>
+      <? isLast("test_4_6_0") ?>
+    <? endforeach ?> AS test_4_6_0
+
+    -- Test 4.6.1 - isLast called inside a foreach block with a list last item.
+    -- Expected: isLast returns TRUE, this returns TRUE
+    ,<? foreach("test_4_6_1") ?>
+      <? if isLast("test_4_6_1") ?>
+        true
+      <? else ?>
+      <? endif ?>
+    <? endforeach ?> AS test_4_6_1
+
+    -- Test 4.6.2 - isLast called inside a foreach block not a list last item.
+    -- Expected: isLast returns FALSE, this returns TRUE
+    ,<? foreach("test_4_6_2") ?>
+      <? if isLast("test_4_6_2") ?>
+      <? else ?>
+        true
+      <? endif ?>
+    <? endforeach ?> AS test_4_6_2
+
+    -- Test 4.6.3 - isLast called inside a foreach block not a list, but parameter
+    -- does exist.
+    -- Expected: isLast returns FALSE, this returns TRUE
+    ,<? foreach("test_4_6_3") ?>
+      <? if isLast("test_4_6_32") ?>
+        false
+      <? else ?>
+        true
+      <? endif ?>
+    <? endforeach ?> AS test_4_6_3
+
+    -- Test 4.6.4 - isLast called inside a foreach block with a parameter that does
+    -- not exist.
+    -- Expected: isLast returns FALSE, this returns TRUE
+    ,<? foreach("test_4_6_4") ?>
+      <? if isLast("not_exist") ?>
+        false
+      <? else ?>
+        true
+      <? endif ?>
+    <? endforeach ?> AS test_4_6_4
+
+    -- Test 4.7.0 - continue inside a foreach block.
+    -- Expected: loop execution continues three times and outputs 'test_4_7_0test_4_7_0test_4_7_0' and 'skipped' is skipped
+    -- TODO: This currently fails in the Qt MetaSQL parser and is something we should fix in the javascript parser.
+    ,<? foreach("test_4_7_0") ?>
+      'test_4_7_0'
+      <? continue ?>
+      'skipped'
+    <? endforeach ?> AS test_4_7_0
+
+    -- Test 4.8.0 - break inside a foreach block.
+    -- Expected: loop execution breaks after first loop and outputs 'test_4_8_0' and 'skipped' is skipped
+    -- TODO: This currently fails in the Qt MetaSQL parser and is something we should fix in the javascript parser.
+    ,<? foreach("test_4_8_0") ?>
+      'test_4_8_0'
+      <? break ?>
+      'skipped'
+    <? endforeach ?> AS test_4_8_0
+
+    -- Test 44.0.0 - foreach with nested foreach.
+    -- Expected: Both loops loop
+    ,<? foreach("test_44_0_0") ?>
+      'test_44_0_0'
+      <? foreach("test_44_0_02") ?>
+        'test_44_0_02'
+      <? endforeach ?>
+    <? endforeach ?> AS test_44_0_0
+
+    -- Test 44.0.1 - foreach with nested foreach using the same parameter.
+    -- Expected: Both loops loop
+    ,<? foreach("test_44_0_1") ?>
+      'test_44_0_1'
+      <? foreach("test_44_0_1") ?>
+        'test_44_0_1'
+      <? endforeach ?>
+    <? endforeach ?> AS test_44_0_1
+
+    -- Test 441.0.0 - foreach with nested foreach with basic if.
+    -- Expected: Both loops loop and if works
+    ,<? foreach("test_441_0_0") ?>
+      <? if exists("test_441_0_0") ?>
+      'test_441_0_0'
+      <? endif ?>
+      <? foreach("test_441_0_02") ?>
+        <? if exists("test_441_0_02") ?>
+        'test_441_0_02'
+        <? endif ?>
+      <? endforeach ?>
+    <? endforeach ?> AS test_441_0_0
+
+    -- Test 442.0.0 - foreach with nested foreach with if and else.
+    -- Expected: Both loops loop and if and else works
+    ,<? foreach("test_442_0_0") ?>
+      <? if isFirst("test_442_0_0") ?>
+      'isFirst'
+      <? else ?>
+      'test_442_0_0'
+      <? endif ?>
+      <? foreach("test_442_0_02") ?>
+        <? if isFirst("test_442_0_02") ?>
+        'isFirst'
+        <? else ?>
+        'test_442_0_02'
+        <? endif ?>
+      <? endforeach ?>
+    <? endforeach ?> AS test_442_0_0
+
+    -- Test 443.0.0 - foreach with nested foreach with if, elseif and else.
+    -- Expected: Both loops loop and if, elseif and else works
+    ,<? foreach("test_443_0_0") ?>
+      <? if isFirst("test_443_0_0") ?>
+      'isFirst'
+      <? elseif isLast("test_443_0_0") ?>
+      'isLast'
+      <? else ?>
+      'test_443_0_0'
+      <? endif ?>
+      <? foreach("test_443_0_02") ?>
+        <? if isFirst("test_443_0_02") ?>
+        'isFirst'
+        <? elseif isLast("test_443_0_02") ?>
+        'isLast'
+        <? else ?>
+        'test_443_0_02'
+        <? endif ?>
+      <? endforeach ?>
+    <? endforeach ?> AS test_443_0_0
+
+    -- Test 44.7.0 - continue inside a nested foreach block.
+    -- Expected: loop execution continues
+    -- TODO: This currently fails in the Qt MetaSQL parser and is something we should fix in the javascript parser.
+
+    -- Test 44.8.0 - break inside a nested foreach block.
+    -- Expected: inside loop execution breaks
+    -- TODO: This currently fails in the Qt MetaSQL parser and is something we should fix in the javascript parser.
+
+    -- Test 444.0.0 - Test foreach with double nested foreach.
+    -- Expected: All loops loop
+    ,<? foreach("test_444_0_0") ?>
+      'test_444_0_0'
+      <? foreach("test_444_0_02") ?>
+        'test_444_0_02'
+        <? foreach("test_444_0_03") ?>
+          'test_444_0_03'
+        <? endforeach ?>
+      <? endforeach ?>
+    <? endforeach ?> AS test_444_0_0
+
+    -- Test 444.7.0 - continue inside a double nested foreach block when a number
+    -- is specified.
+    -- Expected: loop execution continues for nested loop number
+    -- TODO: This currently fails in the Qt MetaSQL parser and is something we should fix in the javascript parser.
+
+    -- Test 444.7.1 - continue inside a double nested foreach block when a number
+    -- is specified greater than the number of nested loops.
+    -- Expected: continues to the outermost loop execution
+    -- TODO: This currently fails in the Qt MetaSQL parser and is something we should fix in the javascript parser.
+
+    -- Test 444.8.0 - break inside a double nested foreach block when a number is
+    -- specified.
+    -- Expected: loop execution breaks to the nested loop number
+    -- TODO: This currently fails in the Qt MetaSQL parser and is something we should fix in the javascript parser.
+
+    -- Test 444.8.1 - break inside a double nested foreach block when a number is
+    -- specified greater than the number of nested loops.
+    -- Expected: breaks all loop execution
+    -- TODO: This currently fails in the Qt MetaSQL parser and is something we should fix in the javascript parser.
+
+    -- Placeholder to test if we made it to the end of all test.
+    ,true AS theend
+) AS tests;

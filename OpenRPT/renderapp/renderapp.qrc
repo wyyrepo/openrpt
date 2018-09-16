@@ -1,0 +1,44 @@
+<RCC version="1.0">
+  <qresource>
+    <file>../../common/common_fr.qm</file>
+    <file>../../MetaSQL/metasql_fr.qm</file>
+    <file>../wrtembed/wrtembed_fr.qm</file>
+    <file>../renderer/renderer_fr.qm</file>
+    <file>renderapp_fr.qm</file>
+  </qresource>
+  <qresource lang="fr">
+   <file alias="common.qm">../../common/common_fr.qm</file>
+   <file alias="metasql.qm">../../MetaSQL/metasql_fr.qm</file>
+   <file alias="wrtembed.qm">../wrtembed/wrtembed_fr.qm</file>
+   <file alias="renderer.qm">../renderer/renderer_fr.qm</file>
+   <file alias="renderapp.qm">renderapp_fr.qm</file>
+  </qresource>
+  <qresource lang="it">
+   <file alias="common.qm">../../common/common_it.qm</file>
+   <file alias="metasql.qm">../../MetaSQL/metasql_it.qm</file>
+   <file alias="wrtembed.qm">../wrtembed/wrtembed_it.qm</file>
+   <file alias="renderer.qm">../renderer/renderer_it.qm</file>
+   <file alias="renderapp.qm">renderapp_it.qm</file>
+  </qresource>
+  <qresource lang="ru">
+   <file alias="common.qm">../../common/common_ru.qm</file>
+   <file alias="metasql.qm">../../MetaSQL/metasql_ru.qm</file>
+   <file alias="wrtembed.qm">../wrtembed/wrtembed_ru.qm</file>
+   <file alias="renderer.qm">../renderer/renderer_ru.qm</file>
+   <file alias="renderapp.qm">renderapp_ru.qm</file>
+  </qresource>
+  <qresource lang="es">
+   <file alias="common.qm">../../common/common_es.qm</file>
+   <file alias="metasql.qm">../../MetaSQL/metasql_es.qm</file>
+   <file alias="wrtembed.qm">../wrtembed/wrtembed_es.qm</file>
+   <file alias="renderer.qm">../renderer/renderer_es.qm</file>
+   <file alias="renderapp.qm">renderapp_es.qm</file>
+  </qresource>
+  <qresource lang="ar">
+   <file alias="common.qm">../../common/common_ar.qm</file>
+   <file alias="metasql.qm">../../MetaSQL/metasql_ar.qm</file>
+   <file alias="wrtembed.qm">../wrtembed/wrtembed_ar.qm</file>
+   <file alias="renderer.qm">../renderer/renderer_ar.qm</file>
+   <file alias="renderapp.qm">renderapp_ar.qm</file>
+  </qresource>
+</RCC>

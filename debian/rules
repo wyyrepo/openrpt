@@ -1,0 +1,34 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/architecture.mk
+
+# this tells OpenRPT's build system not to build its own copy of libdmtx
+export USE_SYSTEM_DMTX=1
+
+%:
+	dh $@ --builddirectory=. --parallel
+
+override_dh_auto_clean:
+	rm -rf bin/* OpenRPT/Dmtx_Library
+	chmod -x OpenRPT/images/*.png
+	dh_auto_clean
+
+override_dh_auto_configure:
+	lrelease */*/*.ts */*.ts
+	# convert to dynamic linking
+	#find . -name '*.pro' -a -not -path './.pc/*' -exec sed -i.orig -e 's/staticlib/dll/g' -e 's/lib\([A-Za-z]*\)\.a/lib\1.so/'  {} \;
+	dh_auto_configure
+
+override_dh_auto_install:
+	mv bin/graph bin/openrpt-graph
+	mkdir -p debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
+	mv lib/lib*.so* debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
+	dh_auto_install
+	#find . -name '*.pro' -a -not -path './.pc/*' -exec test -e {}.orig \; -a -exec mv -f {}.orig {} \;
+
+get-orig-source:
+	@d=$$(readlink -e $(MAKEFILE_LIST)); \
+	cd $${d%/*}/..; \
+	debian/get-orig-source.sh $(CURDIR) +dfsg
+
+.PHONY: override_dh_auto_configure override_dh_auto_install override_dh_auto_clean get-orig-source

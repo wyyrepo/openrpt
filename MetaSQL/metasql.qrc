@@ -1,0 +1,26 @@
+<RCC version="1.0">
+  <qresource>
+    <file>../common/common_fr.qm</file>
+    <file>metasql_fr.qm</file>
+  </qresource>
+  <qresource lang="fr">
+    <file alias="common.qm">../common/common_fr.qm</file>
+    <file alias="metasql.qm">metasql_fr.qm</file>
+  </qresource>  
+  <qresource lang="it">
+    <file alias="common.qm">../common/common_it.qm</file>
+    <file alias="metasql.qm">metasql_it.qm</file>
+  </qresource>
+  <qresource lang="ru">
+    <file alias="common.qm">../common/common_ru.qm</file>
+    <file alias="metasql.qm">metasql_ru.qm</file>
+  </qresource>
+  <qresource lang="es">
+    <file alias="common.qm">../common/common_es.qm</file>
+    <file alias="metasql.qm">metasql_es.qm</file>
+  </qresource>
+  <qresource lang="ar">
+    <file alias="common.qm">../common/common_ar.qm</file>
+    <file alias="metasql.qm">metasql_ar.qm</file>
+  </qresource>
+</RCC>

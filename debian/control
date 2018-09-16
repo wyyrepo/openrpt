@@ -1,0 +1,44 @@
+Source: openrpt
+Section: misc
+Priority: optional
+Maintainer: Debian xTuple Maintainers <pkg-xtuple-maintainers@lists.alioth.debian.org>
+Uploaders:
+ Andrew Shadura <andrewsh@debian.org>,
+ Daniel Pocock <daniel@pocock.pro>
+Build-Depends: debhelper (>= 9), libqt4-dev (>= 4.1.0), libdmtx-dev, dpkg-dev (>= 1.16.1~)
+Standards-Version: 3.9.5
+Homepage: http://www.xtuple.com/openrpt/
+Vcs-Git: https://github.com/xtuple/openrpt
+Vcs-Browser: https://github.com/xtuple/openrpt
+
+Package: libopenrpt1
+Section: libs
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: graphical SQL report writer, designer and rendering library
+ Graphical SQL report writer, designer and rendering engine, optimized
+ for PostgreSQL. WYSIWYG display, GUI built with Qt. Reports can be saved
+ as XML, either as files or in a database.
+ .
+ This package contains the shared libraries.
+
+Package: openrpt
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libqt4-sql-psql
+Description: graphical SQL report writer, designer and rendering engine
+ Graphical SQL report writer, designer and rendering engine, optimized
+ for PostgreSQL. WYSIWYG display, GUI built with Qt. Reports can be saved
+ as XML, either as files or in a database.
+
+Package: libopenrpt-dev
+Section: libdevel
+Architecture: any
+Depends: libqt4-dev (>= 4.1.0), libdmtx-dev, ${misc:Depends}, libopenrpt1 (= ${binary:Version})
+Description: graphical SQL report writer, designer and rendering engine (development)
+ Graphical SQL report writer, designer and rendering engine, optimized
+ for PostgreSQL. WYSIWYG display, GUI built with Qt. Reports can be saved
+ as XML, either as files or in a database.
+ .
+ This package contains the static development library and its headers.
+

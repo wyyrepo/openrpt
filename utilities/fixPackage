@@ -1,0 +1,204 @@
+#!/bin/bash
+PROG=`basename $0`
+INCLASSISTANT=false
+INCLDBPLUGINS=false
+INCLIMAGEPLUGINS=false
+INCLXTUPLEPLUGINS=false
+
+if ! [ -d $QTDIR ]; then
+  for PATHPART in `echo $PATH | tr : " "` ; do
+    if [ -f "$PATHPART"/qmake ] ; then
+      QTDIR="$PATHPART"
+    fi
+  done
+fi
+if ! [ -d $QTDIR ]; then
+  echo "Cannot find QTDIR"
+  exit 1
+fi
+
+if ! [ -d $PGDIR ]; then
+  for PATHPART in `echo $PATH | tr : " "` ; do
+    if [ -f "$PATHPART"/psql ] ; then
+      PGDIR="$PATHPART"
+    fi
+  done
+fi
+if ! [ -d $PGDIR/lib ]; then
+  echo "Cannot find PGDIR/lib"
+  exit 1
+fi
+
+usage() {
+  echo "$PROG [ -h ] [ -a ] [ -p{IDX} ] .../executable.app [ executable-name ]"
+  echo
+  echo "-h      get this usage information"
+  echo "-a      include Qt Assistant as part of the application bundle"
+  echo "-p      include Qt Plugins as part of the application bundle"
+  echo "        I => include image plugins    [ $INCLIMAGEPLUGINS ]"
+  echo "        D => include database plugins [ $INCLDBPLUGINS ]"
+  echo "        X => include xTuple plugins   [ $INCLXTUPLEPLUGINS ]"
+  echo "-x      turn on shell debugging output"
+  echo
+  echo "The executable.app argument is the path of the Macintosh application"
+  echo "bundle directory. This can be either absolute or relative."
+  echo
+  echo "On rare occasion the executable file within the bundle has a different"
+  echo "name than the bundle itself. In this case, add the second executable-name"
+  echo "argument to specify the executable file."
+  echo
+  echo "Env variables:"
+  echo "QTDIR   location of Qt installation [ $QTDIR ]"
+  echo "PGDIR   location of PostgreSQL installation [ $PGDIR ]"
+  echo
+  echo "Examples:"
+  echo "$PROG ../bin/openrpt.app"
+  echo "$PROG /Users/random-user/testing.app trial"
+  echo "$PROG -a xtuple/trunk/bin/xtuple.app"
+}
+
+set -- `getopt hap:x $*`
+if [ $? != 0 ] ; then
+  usage
+  exit 1
+fi
+
+while [ $1 != -- ] ; do
+  case "$1" in
+    -h) usage
+        exit 0
+        ;;
+    -a) INCLASSISTANT=true
+        ;;
+    -p) if echo $2 | grep -q D ; then INCLDBPLUGINS=true     ; fi
+        if echo $2 | grep -q I ; then INCLIMAGEPLUGINS=true  ; fi
+        if echo $2 | grep -q X ; then INCLXTUPLEPLUGINS=true ; fi
+        shift
+        ;;
+    -x) set -x
+        ;;
+     *) usage
+        exit 1
+        ;;
+  esac
+  shift
+done
+shift # past the --
+
+if [ $# -lt 1 -o $# -gt 2 ] ; then
+  usage
+  exit 1
+elif [ $# -eq 1 ] ; then
+  APPROOT=$1
+  EXECNAME=`basename $APPROOT .app`
+elif [ $# -eq 2 ] ; then
+  APPROOT=$1
+  EXECNAME=$2
+fi
+
+if ! [ -d "$APPROOT" ] ; then
+  echo "$PROG: $APPROOT does not exist so either rebuild or specify a .app directory"
+  exit 1
+elif ! [ -f "$APPROOT/Contents/MacOS/$EXECNAME" ] ; then
+  echo "$PROG: $APPROOT/Contents/MacOS/$EXECNAME does not exist so rebuild, "
+  echo "       specify a proper .app directory, or name the executable as well as the .app"
+  exit 1
+fi
+
+cd $APPROOT                                                     || exit 1
+APPROOT=`pwd`
+
+collectAndRenameLibs() {
+  if [ $# -ne 1 ] ; then
+    echo "$PROG collectAndRenameLibs() expected 1 args and got $#: $*"
+    return 1
+  fi
+  if expr "$1" : '\/' > /dev/null ; then
+    FILE="$1"
+  else
+    FILE="`pwd`/$1"
+  fi
+
+  STARTDIR=`pwd`
+  NEWLOC="@executable_path/../Frameworks"
+
+  FRAMEWORKSDIR=$APPROOT/Contents/Frameworks
+  [ -d $FRAMEWORKSDIR ] || mkdir $FRAMEWORKSDIR                     || return 1
+  cd $FRAMEWORKSDIR                                                 || return 1
+
+  LIBSTORENAME=`otool -L $FILE | egrep "($QTDIR|$PGDIR)" |  awk '{print $1}'`
+  for TORENAME in $LIBSTORENAME ; do
+    BASETORENAME=`basename $TORENAME`
+    [ -e "$BASETORENAME" ] || cp "$TORENAME" .                      || return 1
+    install_name_tool -id $NEWLOC/$BASETORENAME $BASETORENAME       || return 1
+    install_name_tool -change $TORENAME $NEWLOC/$BASETORENAME $FILE || return 1
+  done
+
+  cd $STARTDIR                                                      || return 1
+  return 0
+}
+
+collectAndRenameLibs $APPROOT/Contents/MacOS/$EXECNAME              || exit 2
+
+[ -d $APPROOT/Contents/Resources ] || mkdir $APPROOT/Contents/Resources || exit 3
+cd $APPROOT/Contents/Resources                                  ||  exit 3
+# create a qt.conf file pointing to the plugins directory
+echo "[Paths]" > qt.conf
+echo "Prefix = .." >> qt.conf
+
+if $INCLIMAGEPLUGINS ; then
+  [ -d $APPROOT/Contents/plugins/imageformats ] || \
+    mkdir -p $APPROOT/Contents/plugins/imageformats                 || exit 2
+  TMPPLUGINS=`ls $QTDIR/plugins/imageformats/*.dylib | grep -v _debug`
+  cp $TMPPLUGINS $APPROOT/Contents/plugins/imageformats || exit 2
+fi
+
+if $INCLDBPLUGINS ; then
+  [ -d $APPROOT/Contents/plugins/sqldrivers ] || \
+    mkdir -p $APPROOT/Contents/plugins/sqldrivers                 || exit 2
+  TMPPLUGINS=`ls $QTDIR/plugins/sqldrivers/*.dylib | grep -v _debug`
+  cp $TMPPLUGINS $APPROOT/Contents/plugins/sqldrivers || exit 2
+fi
+
+if $INCLXTUPLEPLUGINS ; then
+  [ -d $APPROOT/Contents/plugins/designer ] || \
+    mkdir -p $APPROOT/Contents/plugins/designer                 || exit 2
+  cp $QTDIR/plugins/designer/libxtuplewidgets.dylib $APPROOT/Contents/plugins/designer || exit 2
+fi
+
+for PLUGIN in $APPROOT/Contents/plugins/*/*.dylib ; do
+  collectAndRenameLibs $PLUGIN                                  || exit 2
+done
+
+cd $APPROOT/contents/MacOS
+for PDIR in sqldrivers imageformats ; do
+  if [ ! -e $PDIR ] ; then
+    if [ -L $PDIR ] ; then
+      rm $PDIR
+    fi
+    ln -s ../plugins/$PDIR                                      || exit 2
+  fi
+done
+cd $APPROOT
+
+if $INCLASSISTANT ; then
+  cp -r $QTDIR/bin/Assistant_adp.app $APPROOT/Contents/Resources/Assistant_adp.app                || exit 3
+  collectAndRenameLibs $APPROOT/Contents/Resources/Assistant_adp.app/Contents/MacOS/Assistant_adp || exit 3
+  cd $APPROOT/Contents/Resources/Assistant_adp.app/Contents       || exit 3
+  if [ ! -e Frameworks ] ; then
+    ln -s ../../../Frameworks .                                   || exit 3
+  fi
+  if [ ! -e imageformats ] ; then
+    ln -s ../../../plugins/imageformats                           || exit 4
+  fi
+  echo "[Paths]" > qt.conf
+  echo "Prefix = .." >> qt.conf
+fi
+
+while [ `otool -L $APPROOT/Contents/Frameworks/* | egrep "($QTDIR|$PGDIR)" | wc -l` -gt 0 ] ; do
+  for LIB in $APPROOT/Contents/Frameworks/* ; do
+    collectAndRenameLibs $LIB                || exit 4
+  done
+done
+
+exit 0

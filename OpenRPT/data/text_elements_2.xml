@@ -1,0 +1,126 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Test for Text elements</title>
+ <name>Test for Text elements</name>
+ <description>Test for Text elements</description>
+ <grid>
+  <snap/>
+  <show/>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>Letter</size>
+ <portrait/>
+ <topmargin>25</topmargin>
+ <bottommargin>25</bottommargin>
+ <rightmargin>25</rightmargin>
+ <leftmargin>25</leftmargin>
+ <querysource>
+  <name>detail</name>
+  <sql>SELECT * FROM TABLE1
+</sql>
+ </querysource>
+ <querysource>
+  <name>footer</name>
+  <sql>SELECT * FROM TABLE2
+</sql>
+ </querysource>
+ <querysource>
+  <name>header</name>
+  <sql>SELECT * FROM TABLE2</sql>
+ </querysource>
+ <rpthead>
+  <height>545</height>
+  <rect>
+   <x>70</x>
+   <y>25</y>
+   <width>570</width>
+   <height>505</height>
+  </rect>
+  <text>
+   <rect>
+    <x>75</x>
+    <y>30</y>
+    <width>560</width>
+    <height>25</height>
+   </rect>
+   <bottompad>0</bottompad>
+   <font>
+    <face>Helvetica</face>
+    <size>12</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <data>
+    <query>header</query>
+    <column>bigtext</column>
+   </data>
+  </text>
+ </rpthead>
+ <database>
+  <table name="TABLE1">
+   <columns>
+    <column type="TEXT">item_number</column>
+    <column type="NUMERIC">item_qty</column>
+    <column type="TEXT">groupby</column>
+    <column type="TEXT">item_description</column>
+    <column type="TEXT">item_shortdescription</column>
+   </columns>
+   <record>
+    <val>ITEM NUM 1</val>
+    <val>15</val>
+    <val>A</val>
+    <val>1: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer faucibus ante nibh, quis volutpat est. Cras porttitor varius erat, dignissim pharetra felis tristique sit amet. In quam elit, pharetra et tincidunt sit amet, posuere eget augue. Nulla neque libero, tristique at lobortis non, dapibus at lorem. In hac habitasse platea dictumst. Sed vitae dolor in mi dapibus malesuada. Donec ut aliquam nunc.</val>
+    <val>1: Morbi vitae quam erat. Nulla vel risus id quam tincidunt hendrerit. Duis imperdiet magna vitae neque porttitor ac aliquam turpis.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 2</val>
+    <val>25</val>
+    <val>A</val>
+    <val>2: Sed lacus tortor, placerat nec tristique eu, condimentum sit amet mi. Nam in nunc at metus tempor posuere in eu tellus. Duis venenatis, metus non aliquet imperdiet, elit massa vehicula dolor, eget mollis elit tellus nec neque. Aliquam erat volutpat. Nullam non eros purus. Proin rutrum fermentum accumsan. Suspendisse congue.</val>
+    <val>2: Nulla facilisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a quam ut nisi faucibus commodo at id purus.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 3</val>
+    <val>35</val>
+    <val>B</val>
+    <val>3: Nam eget eros felis. Donec placerat, tortor nec dapibus rhoncus, purus leo porttitor mauris, nec tincidunt dui eros at diam. Vivamus porta bibendum eros, vitae fringilla urna tempus id. Quisque justo est, iaculis nec tincidunt at, molestie quis dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per.</val>
+    <val>3: Phasellus sapien dui, ornare id lacinia ac, vestibulum nec nibh. Proin sapien metus, bibendum tristique.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 4</val>
+    <val>45</val>
+    <val>B</val>
+    <val>4: Quisque eget sem a magna pharetra imperdiet id sed nunc. Morbi mattis elementum elit malesuada feugiat. Maecenas molestie mi at diam volutpat vel porttitor massa porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus accumsan nibh nec ante condimentum hendrerit. Nulla nunc enim, pulvinar.</val>
+    <val>4: Curabitur varius felis in mauris porttitor vitae aliquet dui luctus. Donec pulvinar, nunc eget interdum.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 5</val>
+    <val>55</val>
+    <val>B</val>
+    <val>5: Nunc viverra velit quis massa accumsan convallis. Pellentesque eleifend ante id nulla lobortis dictum. Nunc sagittis convallis nibh, sit amet consequat lectus iaculis et. Maecenas pulvinar, eros sed iaculis interdum, mauris est tincidunt lorem, eu auctor odio ipsum eget arcu. Pellentesque quis nunc nibh, euismod.</val>
+    <val>5: Curabitur eu ultrices mauris. Aenean faucibus sem nec massa vehicula id vulputate nisl rhoncus. Proin.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 6</val>
+    <val>66</val>
+    <val>B</val>
+    <val>6: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis egestas sem quis est bibendum id rhoncus tortor tincidunt. Integer fermentum risus ac elit sodales malesuada. Aliquam faucibus lectus ac purus ullamcorper in ultricies ipsum vulputate. Duis posuere purus libero, at auctor velit. Ut augue velit, euismod a convallis nec, egestas.</val>
+    <val>6: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sit amet imperdiet lectus. Aliquam nec libero dolor. Duis elementum nunc.</val>
+   </record>
+  </table>
+  <table name="TABLE2">
+   <columns>
+    <column type="NUMERIC">f_subtotal</column>
+    <column type="TEXT">bigtext</column>
+   </columns>
+   <record>
+    <val>100</val>
+    <val>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ornare pharetra luctus. Pellentesque condimentum condimentum vulputate. Maecenas blandit odio fringilla nibh dapibus pulvinar. Praesent hendrerit elementum velit non aliquam. Praesent mattis ante nec lacus elementum elementum. Cras massa tortor, tristique in condimentum sed, dignissim quis augue. Suspendisse lorem ligula, ullamcorper tempor varius vitae, interdum in eros. Aenean et odio ligula, at dignissim odio. Proin et orci ante. Morbi posuere quam vel elit mattis feugiat. Phasellus ullamcorper facilisis eros nec gravida. Fusce non risus ac sem convallis dictum sit amet in leo. Donec auctor, eros ac ultricies lobortis, velit augue adipiscing dui, ut rhoncus quam dolor eu augue. Sed ipsum nisl, sodales at ultrices tempus, condimentum eget libero. Nam rhoncus accumsan neque, nec tempus leo blandit eget.
+
+Vivamus at sem ut velit congue gravida. Cras gravida feugiat odio at rutrum. Aenean iaculis nunc semper orci sagittis scelerisque. Nunc ut tellus ligula, et sagittis ligula. Donec et nisl non purus vestibulum adipiscing. Sed ac tincidunt turpis. Vivamus bibendum purus vel tellus sollicitudin accumsan. Fusce in purus eu nunc ultrices vulputate sit amet non metus. Duis lobortis rutrum bibendum. Vestibulum viverra malesuada placerat. Maecenas convallis molestie tempus. Donec vitae metus vel metus aliquam.</val>
+   </record>
+  </table>
+ </database>
+</report>

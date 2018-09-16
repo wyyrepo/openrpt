@@ -1,0 +1,353 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Database List</title>
+ <name>DBList</name>
+ <description>This report lists all the databases on a server. Optionally the parameter 'owner' may be specified to show only databases owned by the specified username.</description>
+ <size>Letter</size>
+ <portrait/>
+ <topmargin>50</topmargin>
+ <bottommargin>50</bottommargin>
+ <rightmargin>50</rightmargin>
+ <leftmargin>50</leftmargin>
+ <querysource>
+  <name>dblist</name>
+  <sql>SELECT 1 AS linenum,
+       d.datname as "Name",
+       u.usename as "Owner",
+       pg_catalog.pg_encoding_to_char(d.encoding) as "Encoding"
+  FROM pg_catalog.pg_database d
+       LEFT JOIN pg_catalog.pg_user u ON d.datdba = u.usesysid
+&lt;? if exists("owner") ?>
+ WHERE (u.usename = &lt;? value("owner") ?>)
+&lt;? endif ?>
+ ORDER BY 1;
+</sql>
+ </querysource>
+ <querysource>
+  <name>head</name>
+  <sql>SELECT
+&lt;? if exists("owner") ?>
+  (text('Databases owned by ') || text(&lt;? value("owner") ?>))
+&lt;? else ?>
+  text('All Databases')
+&lt;? endif ?>
+AS headLabel;</sql>
+ </querysource>
+ <pghead>
+  <firstpage/>
+  <height>145</height>
+  <label>
+   <rect>
+    <x>425</x>
+    <y>120</y>
+    <width>150</width>
+    <height>18</height>
+   </rect>
+   <font>
+    <face>Bitstream Charter</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Encoding</string>
+  </label>
+  <label>
+   <rect>
+    <x>215</x>
+    <y>120</y>
+    <width>150</width>
+    <height>18</height>
+   </rect>
+   <font>
+    <face>Bitstream Charter</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Owner</string>
+  </label>
+  <field>
+   <rect>
+    <x>50</x>
+    <y>70</y>
+    <width>400</width>
+    <height>20</height>
+   </rect>
+   <font>
+    <face>Bitstream Charter</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>head</query>
+    <column>headLabel</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>5</x>
+    <y>5</y>
+    <width>740</width>
+    <height>40</height>
+   </rect>
+   <font>
+    <face>Bitstream Charter</face>
+    <size>18</size>
+    <weight>bold</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>report_title</column>
+   </data>
+  </field>
+  <label>
+   <rect>
+    <x>5</x>
+    <y>120</y>
+    <width>150</width>
+    <height>18</height>
+   </rect>
+   <font>
+    <face>Bitstream Charter</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Name</string>
+  </label>
+  <line>
+   <xstart>5</xstart>
+   <ystart>140</ystart>
+   <xend>745</xend>
+   <yend>140</yend>
+   <weight>2</weight>
+  </line>
+ </pghead>
+ <pghead>
+  <height>75</height>
+  <line>
+   <xstart>5</xstart>
+   <ystart>70</ystart>
+   <xend>745</xend>
+   <yend>70</yend>
+   <weight>2</weight>
+  </line>
+  <field>
+   <rect>
+    <x>5</x>
+    <y>5</y>
+    <width>740</width>
+    <height>20</height>
+   </rect>
+   <font>
+    <face>Bitstream Charter</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>report_title</column>
+   </data>
+  </field>
+  <label>
+   <rect>
+    <x>425</x>
+    <y>50</y>
+    <width>150</width>
+    <height>18</height>
+   </rect>
+   <font>
+    <face>Bitstream Charter</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Encoding</string>
+  </label>
+  <label>
+   <rect>
+    <x>215</x>
+    <y>50</y>
+    <width>150</width>
+    <height>18</height>
+   </rect>
+   <font>
+    <face>Bitstream Charter</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Owner</string>
+  </label>
+  <label>
+   <rect>
+    <x>5</x>
+    <y>50</y>
+    <width>150</width>
+    <height>18</height>
+   </rect>
+   <font>
+    <face>Bitstream Charter</face>
+    <size>10</size>
+    <weight>bold</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <string>Name</string>
+  </label>
+ </pghead>
+ <section>
+  <name>dblist</name>
+  <detail>
+   <key>
+    <query>dblist</query>
+   </key>
+   <height>21</height>
+   <field>
+    <rect>
+     <x>700</x>
+     <y>0</y>
+     <width>24</width>
+     <height>12</height>
+    </rect>
+    <font>
+     <face>Lucida Grande</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <top/>
+    <data>
+     <query>dblist</query>
+     <column>linenum</column>
+    </data>
+    <tracktotal>%2.0f</tracktotal>
+   </field>
+   <field>
+    <rect>
+     <x>400</x>
+     <y>0</y>
+     <width>300</width>
+     <height>20</height>
+    </rect>
+    <font>
+     <face>Bitstream Charter</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>dblist</query>
+     <column>Encoding</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>5</x>
+     <y>0</y>
+     <width>200</width>
+     <height>20</height>
+    </rect>
+    <font>
+     <face>Bitstream Charter</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>dblist</query>
+     <column>Name</column>
+    </data>
+   </field>
+   <field>
+    <rect>
+     <x>215</x>
+     <y>0</y>
+     <width>200</width>
+     <height>20</height>
+    </rect>
+    <font>
+     <face>Bitstream Charter</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>dblist</query>
+     <column>Owner</column>
+    </data>
+   </field>
+  </detail>
+ </section>
+ <pgfoot>
+  <height>41</height>
+  <field>
+   <rect>
+    <x>695</x>
+    <y>15</y>
+    <width>50</width>
+    <height>20</height>
+   </rect>
+   <font>
+    <face>Bitstream Charter</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>page_number</column>
+   </data>
+  </field>
+  <label>
+   <rect>
+    <x>590</x>
+    <y>15</y>
+    <width>100</width>
+    <height>20</height>
+   </rect>
+   <font>
+    <face>Bitstream Charter</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <right/>
+   <vcenter/>
+   <string>Page:</string>
+  </label>
+  <field>
+   <rect>
+    <x>5</x>
+    <y>15</y>
+    <width>250</width>
+    <height>20</height>
+   </rect>
+   <font>
+    <face>Bitstream Charter</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>report_date</column>
+   </data>
+  </field>
+ </pgfoot>
+</report>

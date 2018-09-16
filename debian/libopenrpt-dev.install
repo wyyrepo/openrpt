@@ -1,0 +1,8 @@
+usr/lib/*/lib*.so
+common/*h /usr/include/openrpt/common
+common/tmp/*h /usr/include/openrpt/common/tmp
+MetaSQL/*h /usr/include/openrpt/MetaSQL
+MetaSQL/tmp/*h /usr/include/openrpt/MetaSQL/tmp
+OpenRPT/renderer/*h /usr/include/openrpt/OpenRPT/renderer
+OpenRPT/wrtembed/*h /usr/include/openrpt/OpenRPT/wrtembed
+OpenRPT/images/* /usr/share/openrpt/OpenRPT/images

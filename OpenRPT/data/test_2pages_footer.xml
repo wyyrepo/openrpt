@@ -1,0 +1,225 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>test_2pages_footer</title>
+ <name>test_2pages_footer</name>
+ <description>Selecting an Alt Address on the PO will cause the printed PO to display that address as the Ship To on the printed document.</description>
+ <parameter default="999" active="true" listtype="static" type="string" name="pohead_id">
+  <description></description>
+ </parameter>
+ <watermark>
+  <data>
+   <query>Context Query</query>
+   <column>title</column>
+  </data>
+  <opacity>0</opacity>
+ </watermark>
+ <grid>
+  <snap/>
+  <show/>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>Letter</size>
+ <landscape/>
+ <topmargin>50</topmargin>
+ <bottommargin>50</bottommargin>
+ <rightmargin>50</rightmargin>
+ <leftmargin>50</leftmargin>
+ <querysource>
+  <name>Detail</name>
+  <sql>SELECT * FROM TABLE1</sql>
+ </querysource>
+ <pghead>
+  <height>260</height>
+  <line>
+   <xstart>0.427816</xstart>
+   <ystart>257.176</ystart>
+   <xend>1000.89</xend>
+   <yend>257.241</yend>
+   <weight>4</weight>
+  </line>
+  <label>
+   <rect>
+    <x>50</x>
+    <y>80</y>
+    <width>895</width>
+    <height>145</height>
+    <color>
+     <red>85</red>
+     <green>170</green>
+     <blue>255</blue>
+    </color>
+   </rect>
+   <font>
+    <face>Helvetica</face>
+    <size>128</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Header</string>
+  </label>
+  <label>
+   <rect>
+    <x>160</x>
+    <y>10</y>
+    <width>660</width>
+    <height>35</height>
+   </rect>
+   <font>
+    <face>Helvetica</face>
+    <size>24</size>
+    <weight>normal</weight>
+    <italic/>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>This document must print on two pages</string>
+  </label>
+ </pghead>
+ <section>
+  <name>detail</name>
+  <detail>
+   <key>
+    <query>Detail</query>
+   </key>
+   <height>60</height>
+   <field>
+    <rect>
+     <x>5</x>
+     <y>10</y>
+     <width>105</width>
+     <height>30</height>
+    </rect>
+    <font>
+     <face>Arial</face>
+     <size>9</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>Detail</query>
+     <column>item_number</column>
+    </data>
+   </field>
+   <label>
+    <rect>
+     <x>895</x>
+     <y>10</y>
+     <width>100</width>
+     <height>25</height>
+    </rect>
+    <font>
+     <face>Helvetica</face>
+     <size>12</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <string>Detail</string>
+   </label>
+   <line>
+    <xstart>0.445996</xstart>
+    <ystart>57.8903</ystart>
+    <xend>1000.44</xend>
+    <yend>57.8903</yend>
+    <weight>4</weight>
+    <style>3</style>
+   </line>
+  </detail>
+ </section>
+ <pgfoot>
+  <lastpage/>
+  <height>188.365</height>
+  <line>
+   <xstart>0.445996</xstart>
+   <ystart>2.89027</ystart>
+   <xend>1000.44</xend>
+   <yend>2.89027</yend>
+   <weight>4</weight>
+  </line>
+  <label>
+   <rect>
+    <x>55</x>
+    <y>25</y>
+    <width>875</width>
+    <height>145</height>
+    <color>
+     <red>85</red>
+     <green>170</green>
+     <blue>255</blue>
+    </color>
+   </rect>
+   <font>
+    <face>Helvetica</face>
+    <size>128</size>
+    <weight>normal</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>Footer</string>
+  </label>
+ </pgfoot>
+ <database>
+  <table name="TABLE1">
+   <columns>
+    <column type="TEXT">item_number</column>
+    <column type="NUMERIC">item_qty</column>
+    <column type="TEXT">groupby</column>
+    <column type="TEXT">item_description</column>
+    <column type="TEXT">item_shortdescription</column>
+   </columns>
+   <record>
+    <val>ITEM NUM 1</val>
+    <val>15</val>
+    <val>A</val>
+    <val>1: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer faucibus ante nibh, quis volutpat est. Cras porttitor varius erat, dignissim pharetra felis tristique sit amet. In quam elit, pharetra et tincidunt sit amet, posuere eget augue. Nulla neque libero, tristique at lobortis non, dapibus at lorem. In hac habitasse platea dictumst. Sed vitae dolor in mi dapibus malesuada. Donec ut aliquam nunc.</val>
+    <val>1: Morbi vitae quam erat. Nulla vel risus id quam tincidunt hendrerit. Duis imperdiet magna vitae neque porttitor ac aliquam turpis.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 2</val>
+    <val>25</val>
+    <val>A</val>
+    <val>2: Sed lacus tortor, placerat nec tristique eu, condimentum sit amet mi. Nam in nunc at metus tempor posuere in eu tellus. Duis venenatis, metus non aliquet imperdiet, elit massa vehicula dolor, eget mollis elit tellus nec neque. Aliquam erat volutpat. Nullam non eros purus. Proin rutrum fermentum accumsan. Suspendisse congue.</val>
+    <val>2: Nulla facilisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a quam ut nisi faucibus commodo at id purus.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 3</val>
+    <val>35</val>
+    <val>B</val>
+    <val>3: Nam eget eros felis. Donec placerat, tortor nec dapibus rhoncus, purus leo porttitor mauris, nec tincidunt dui eros at diam. Vivamus porta bibendum eros, vitae fringilla urna tempus id. Quisque justo est, iaculis nec tincidunt at, molestie quis dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per.</val>
+    <val>3: Phasellus sapien dui, ornare id lacinia ac, vestibulum nec nibh. Proin sapien metus, bibendum tristique.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 4</val>
+    <val>45</val>
+    <val>B</val>
+    <val>4: Quisque eget sem a magna pharetra imperdiet id sed nunc. Morbi mattis elementum elit malesuada feugiat. Maecenas molestie mi at diam volutpat vel porttitor massa porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus accumsan nibh nec ante condimentum hendrerit. Nulla nunc enim, pulvinar.</val>
+    <val>4: Curabitur varius felis in mauris porttitor vitae aliquet dui luctus. Donec pulvinar, nunc eget interdum.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 5</val>
+    <val>55</val>
+    <val>B</val>
+    <val>5: Nunc viverra velit quis massa accumsan convallis. Pellentesque eleifend ante id nulla lobortis dictum. Nunc sagittis convallis nibh, sit amet consequat lectus iaculis et. Maecenas pulvinar, eros sed iaculis interdum, mauris est tincidunt lorem, eu auctor odio ipsum eget arcu. Pellentesque quis nunc nibh, euismod.</val>
+    <val>5: Curabitur eu ultrices mauris. Aenean faucibus sem nec massa vehicula id vulputate nisl rhoncus. Proin.</val>
+   </record>
+   <record>
+    <val>ITEM NUM 6</val>
+    <val>66</val>
+    <val>B</val>
+    <val>6: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis egestas sem quis est bibendum id rhoncus tortor tincidunt. Integer fermentum risus ac elit sodales malesuada. Aliquam faucibus lectus ac purus ullamcorper in ultricies ipsum vulputate. Duis posuere purus libero, at auctor velit. Ut augue velit, euismod a convallis nec, egestas.</val>
+    <val>6: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sit amet imperdiet lectus. Aliquam nec libero dolor. Duis elementum nunc.</val>
+   </record>
+  </table>
+  <table name="TABLE2">
+   <columns>
+    <column type="NUMERIC">f_subtotal</column>
+   </columns>
+   <record>
+    <val>100</val>
+   </record>
+  </table>
+ </database>
+</report>

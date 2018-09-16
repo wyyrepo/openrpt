@@ -1,0 +1,31 @@
+OpenRPT 2.2.0
+==============
+
+In release 1.2.0 we added in support for ODBC database connections.
+
+In order to use the ODBC connection one should only have to perform the
+appropriate setup of the ODBC Manager and associated drivers. Once this is
+complete an ODBC connection can be used by selecting the "Driver" option "ODBC"
+and specifying the DSN name in the "Database" field on the Login Options screen.
+Depending on your Database Manager and how you configured your ODBC connection
+will determine if you need to specify a user name or password on the Login
+screen.
+
+For the Windows binary releases we have compiled the ODBC driver support
+directly into the Qt library that is distributed with the application.
+However on the Mac and Linux distributions we have included the ODBC driver
+support as a plugin. The reason for doing this is that on these platforms
+there are a number of choices and variations to the ODBC Managers that are
+available. If you do not have the correct ODBC Manager installed or configured
+correctly then the OpenRPT application will continue to function but you will
+not be able to connect using an ODBC connection.
+
+On Linux we have compiled the ODBC plugin against UnixODBC version 2.2.11.
+On Mac we have compiled the ODBC plugin against iODBC 2.1.6.
+
+If you are using a different ODBC manager you can either replace the included
+ODBC plugin with one that was compiled for the ODBC Manager you have or you
+can compile a version of Qt that was compiled with support for your ODBC
+Manager.
+
+

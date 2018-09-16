@@ -1,0 +1,222 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title></title>
+ <name>crosstabtest</name>
+ <description></description>
+ <parameter default="2010-01-01" active="true" listtype="static" type="string" name="1-StartDate" >
+  <description></description>
+ </parameter>
+ <parameter default="2099-01-01" active="true" listtype="static" type="string" name="2-EndDate" >
+  <description></description>
+ </parameter>
+ <size>Letter</size>
+ <landscape/>
+ <topmargin>25</topmargin>
+ <bottommargin>25</bottommargin>
+ <rightmargin>25</rightmargin>
+ <leftmargin>25</leftmargin>
+ <querysource>
+  <name>crosstabdetail</name>
+  <sql>SELECT 
+     cohead_id, 
+     (
+      SELECT (cohead_number || ' - ' || cust_number) as co_cust 
+      FROM custinfo 
+      WHERE cohead_cust_id = cust_id
+     ) AS co_cust, 
+     coitem_linenumber, 
+     (
+      SELECT item_number || ' - ' || formatQty(coitem_qtyord) || ' - ' || coitem_status 
+      FROM item, itemsite 
+      WHERE coitem_itemsite_id = itemsite_id AND itemsite_item_id = item_id
+     ) AS item_number_qty_status
+FROM cohead JOIN coitem ON (cohead_id=coitem_cohead_id)
+WHERE 
+     --coitem_status NOT IN ('X','C')
+     cohead_orderdate BETWEEN &lt;? value("1-StartDate") ?> AND &lt;? value("2-EndDate") ?>
+ORDER BY cohead_number DESC, coitem_linenumber;</sql>
+ </querysource>
+ <pghead>
+  <height>100</height>
+  <label>
+   <rect>
+    <x>345</x>
+    <y>0</y>
+    <width>360</width>
+    <height>25</height>
+   </rect>
+   <font>
+    <face>Arial</face>
+    <size>14</size>
+    <weight>bold</weight>
+   </font>
+   <hcenter/>
+   <vcenter/>
+   <string>S/O Lines by S/O</string>
+  </label>
+  <field>
+   <rect>
+    <x>500</x>
+    <y>40</y>
+    <width>100</width>
+    <height>20</height>
+   </rect>
+   <font>
+    <face>Arial</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <data>
+    <query>Parameter Query</query>
+    <column>1-StartDate</column>
+   </data>
+  </field>
+  <field>
+   <rect>
+    <x>500</x>
+    <y>60</y>
+    <width>100</width>
+    <height>20</height>
+   </rect>
+   <font>
+    <face>Arial</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <data>
+    <query>Parameter Query</query>
+    <column>2-EndDate</column>
+   </data>
+  </field>
+  <label>
+   <rect>
+    <x>460</x>
+    <y>60</y>
+    <width>45</width>
+    <height>15</height>
+   </rect>
+   <font>
+    <face>Arial</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <string>To:</string>
+  </label>
+  <label>
+   <rect>
+    <x>460</x>
+    <y>40</y>
+    <width>45</width>
+    <height>15</height>
+   </rect>
+   <font>
+    <face>Arial</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <string>From:</string>
+  </label>
+ </pghead>
+ <section>
+  <name>CrosstabSection</name>
+  <detail>
+   <key>
+    <query>crosstabdetail</query>
+   </key>
+   <height>360</height>
+   <crosstab>
+    <rect>
+     <x>5</x>
+     <y>85</y>
+     <width>210.759</width>
+     <height>59.9819</height>
+     <bgcolor>
+      <red>170</red>
+      <green>170</green>
+      <blue>255</blue>
+     </bgcolor>
+    </rect>
+    <font>
+     <face>Arial</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <data>
+     <query>crosstabdetail</query>
+    </data>
+    <table>
+     <wrappolicy>rows</wrappolicy>
+     <showcolumnheaderagain>yes</showcolumnheaderagain>
+     <showrowheaderagain>yes</showrowheaderagain>
+     <CellMargins>
+      <Left>0</Left>
+      <Right>0</Right>
+      <Top>0</Top>
+      <Bottom>0</Bottom>
+     </CellMargins>
+    </table>
+    <column>
+     <queryColumn>coitem_linenumber</queryColumn>
+     <HAlign>Center</HAlign>
+     <VAlign>Center</VAlign>
+    </column>
+    <row>
+     <queryColumn>co_cust</queryColumn>
+     <HAlign>Left</HAlign>
+     <VAlign>Center</VAlign>
+    </row>
+    <value>
+     <queryColumn>item_number_qty_status</queryColumn>
+     <HAlign>Right</HAlign>
+     <VAlign>Center</VAlign>
+    </value>
+   </crosstab>
+  </detail>
+ </section>
+ <pgfoot>
+  <height>100</height>
+  <label>
+   <rect>
+    <x>515</x>
+    <y>15</y>
+    <width>40</width>
+    <height>20</height>
+   </rect>
+   <font>
+    <face>Arial</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <top/>
+   <string>Page:</string>
+  </label>
+  <field>
+   <rect>
+    <x>555</x>
+    <y>15</y>
+    <width>35</width>
+    <height>20</height>
+   </rect>
+   <font>
+    <face>Arial</face>
+    <size>10</size>
+    <weight>normal</weight>
+   </font>
+   <left/>
+   <vcenter/>
+   <data>
+    <query>Context Query</query>
+    <column>page_number</column>
+   </data>
+  </field>
+ </pgfoot>
+</report>

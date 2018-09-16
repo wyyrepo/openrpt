@@ -1,0 +1,582 @@
+<ui version="4.0" >
+ <comment> * OpenRPT report writer and rendering engine&#xd;
+ * Copyright (C) 2001-2014 by OpenMFG, LLC&#xd;
+ *&#xd;
+ * This library is free software; you can redistribute it and/or&#xd;
+ * modify it under the terms of the GNU Lesser General Public&#xd;
+ * License as published by the Free Software Foundation; either&#xd;
+ * version 2.1 of the License, or (at your option) any later version.&#xd;
+ *&#xd;
+ * This library is distributed in the hope that it will be useful,&#xd;
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of&#xd;
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU&#xd;
+ * Lesser General Public License for more details.&#xd;
+ *&#xd;
+ * You should have received a copy of the GNU Lesser General Public&#xd;
+ * License along with this library; if not, write to the Free Software&#xd;
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA&#xd;
+ * Please contact info@openmfg.com with any questions on this license.</comment>
+ <class>CrossTabEditor</class>
+ <widget class="QDialog" name="CrossTabEditor" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>551</width>
+    <height>497</height>
+   </rect>
+  </property>
+  <property name="sizePolicy" >
+   <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle" >
+   <string>Properties (Field)</string>
+  </property>
+  <property name="sizeGripEnabled" >
+   <bool>true</bool>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_9" >
+   <item row="0" column="0" >
+    <widget class="QLabel" name="TextLabel1_3" >
+     <property name="text" >
+      <string>Query Source:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="2" >
+    <widget class="QueryComboBox" name="cbQuery" />
+   </item>
+   <item row="1" column="0" colspan="3" >
+    <widget class="QGroupBox" name="m_tablePropertiesGroupBox" >
+     <property name="title" >
+      <string>Table properties</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_7" >
+      <item row="0" column="0" >
+       <widget class="QGroupBox" name="m_TableCellMarginsGroupBox" >
+        <property name="title" >
+         <string>Table cell margins (inches)</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_4" >
+         <item row="0" column="0" >
+          <widget class="QLabel" name="m_cellLeftMarginLabel" >
+           <property name="text" >
+            <string>Left:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" >
+          <widget class="QDoubleSpinBox" name="m_cellLeftMarginDoubleSpinBox" >
+           <property name="singleStep" >
+            <double>0.010000000000000</double>
+           </property>
+           <property name="value" >
+            <double>0.020000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2" >
+          <widget class="QLabel" name="m_cellRightMarginLabel" >
+           <property name="text" >
+            <string>Right:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3" >
+          <widget class="QDoubleSpinBox" name="m_cellRightMarginDoubleSpinBox" >
+           <property name="singleStep" >
+            <double>0.010000000000000</double>
+           </property>
+           <property name="value" >
+            <double>0.020000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" >
+          <widget class="QLabel" name="m_cellTopMarginLabel" >
+           <property name="text" >
+            <string>Top:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" >
+          <widget class="QDoubleSpinBox" name="m_cellTopMarginDoubleSpinBox" >
+           <property name="singleStep" >
+            <double>0.010000000000000</double>
+           </property>
+           <property name="value" >
+            <double>0.020000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2" >
+          <widget class="QLabel" name="m_cellBottomMarginLabel" >
+           <property name="text" >
+            <string>Bottom:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3" >
+          <widget class="QDoubleSpinBox" name="m_cellBottomMarginDoubleSpinBox" >
+           <property name="singleStep" >
+            <double>0.010000000000000</double>
+           </property>
+           <property name="value" >
+            <double>0.020000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="QGroupBox" name="m_tableWrappingPolicyGroupBox" >
+        <property name="title" >
+         <string>Wrapping policy</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_5" >
+         <item row="0" column="0" >
+          <widget class="QRadioButton" name="m_wrapRowsFirstRadioButton" >
+           <property name="text" >
+            <string>First display all rows</string>
+           </property>
+           <property name="checked" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" >
+          <widget class="QRadioButton" name="m_wrapColumnsFirstRadioButton" >
+           <property name="text" >
+            <string>First display all columns</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="0" >
+       <widget class="QGroupBox" name="m_tableDisplayHeaderGroupBox" >
+        <property name="title" >
+         <string>Display header</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_6" >
+         <item row="0" column="0" >
+          <widget class="QCheckBox" name="m_tableDisplayColumnHeaderCheckBox" >
+           <property name="text" >
+            <string>Display column header on each part</string>
+           </property>
+           <property name="checked" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" >
+          <widget class="QCheckBox" name="m_tableDisplayRowHeaderCheckBox" >
+           <property name="text" >
+            <string>Display row header on each part</string>
+           </property>
+           <property name="checked" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="1" >
+       <widget class="QPushButton" name="btnFont" >
+        <property name="text" >
+         <string>&amp;Font...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="4" >
+    <layout class="QGridLayout" name="gridLayout_8" >
+     <item row="0" column="1" >
+      <widget class="QGroupBox" name="columnQueryGroupBox" >
+       <property name="title" >
+        <string>Column query source</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout" >
+        <item row="0" column="0" >
+         <widget class="QLabel" name="columnQueryColumnTextLabel" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text" >
+           <string>Column query column:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QLineEdit" name="columnQueryLineEdit" />
+        </item>
+        <item row="1" column="0" >
+         <widget class="QLabel" name="columnQueryHAlignTextLabel" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text" >
+           <string>Horizontal alignment:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QComboBox" name="columnQueryHAlignComboBox" >
+          <item>
+           <property name="text" >
+            <string>Normal</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Left</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Center</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Right</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="2" column="0" >
+         <widget class="QLabel" name="columnQueryVAlignTextLabel" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text" >
+           <string>Vertical alignment:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1" >
+         <widget class="QComboBox" name="columnQueryVAlignComboBox" >
+          <item>
+           <property name="text" >
+            <string>Normal</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Top</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Center</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Bottom</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="1" column="0" >
+      <widget class="QGroupBox" name="rowQueryGroupBox" >
+       <property name="title" >
+        <string>Row query source</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2" >
+        <item row="0" column="0" >
+         <widget class="QLabel" name="rowQueryColumnTextLabel" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text" >
+           <string>Row query column:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QLineEdit" name="rowQueryLineEdit" />
+        </item>
+        <item row="1" column="0" >
+         <widget class="QLabel" name="rowQueryHAlignTextLabel" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text" >
+           <string>Horizontal alignment:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QComboBox" name="rowQueryHAlignComboBox" >
+          <item>
+           <property name="text" >
+            <string>Normal</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Left</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Center</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Right</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="2" column="0" >
+         <widget class="QLabel" name="rowQueryVAlignTextLabel" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text" >
+           <string>Vertical alignment:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1" >
+         <widget class="QComboBox" name="rowQueryVAlignComboBox" >
+          <item>
+           <property name="text" >
+            <string>Normal</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Top</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Center</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Bottom</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="1" column="1" >
+      <widget class="QGroupBox" name="valueQueryGroupBox" >
+       <property name="title" >
+        <string>Value query source</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_3" >
+        <item row="0" column="0" >
+         <widget class="QLabel" name="valueQueryColumnTextLabel" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text" >
+           <string>Value query column:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QLineEdit" name="valueQueryLineEdit" />
+        </item>
+        <item row="1" column="0" >
+         <widget class="QLabel" name="valueQueryHAlignTextLabel" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text" >
+           <string>Horizontal alignment:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QComboBox" name="valueQueryHAlignComboBox" >
+          <item>
+           <property name="text" >
+            <string>Normal</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Left</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Center</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Right</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="2" column="0" >
+         <widget class="QLabel" name="valueQueryVAlignTextLabel" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text" >
+           <string>Vertical alignment:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1" >
+         <widget class="QComboBox" name="valueQueryVAlignComboBox" >
+          <item>
+           <property name="text" >
+            <string>Normal</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Top</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Center</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Bottom</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="2" >
+    <widget class="QPushButton" name="buttonOk" >
+     <property name="text" >
+      <string>&amp;OK</string>
+     </property>
+     <property name="shortcut" >
+      <string>Alt+O</string>
+     </property>
+     <property name="autoDefault" >
+      <bool>true</bool>
+     </property>
+     <property name="default" >
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3" >
+    <widget class="QPushButton" name="buttonCancel" >
+     <property name="text" >
+      <string>&amp;Cancel</string>
+     </property>
+     <property name="shortcut" >
+      <string>Alt+C</string>
+     </property>
+     <property name="autoDefault" >
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <customwidgets>
+  <customwidget>
+   <class>QueryComboBox</class>
+   <extends>QComboBox</extends>
+   <header>querycombobox.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>cbQuery</tabstop>
+  <tabstop>columnQueryLineEdit</tabstop>
+  <tabstop>btnFont</tabstop>
+  <tabstop>buttonOk</tabstop>
+  <tabstop>buttonCancel</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonOk</sender>
+   <signal>clicked()</signal>
+   <receiver>CrossTabEditor</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>CrossTabEditor</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

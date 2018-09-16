@@ -1,0 +1,74 @@
+
+bldtbls utility - builds a report table if it does not exist on the target database
+===================================================================================
+
+A utility to build the report table used by OpenRPT for different database servers.
+
+Development Notes Friday 15 June 2007
+
+Chris Newey
+newey499 at hotmail.com
+
+IMPORTANT
+=========
+Do a grep for CDN or Chris for odd comments
+
+
+Currently Supported database servers
+====================================
+MySQL
+MySQL via ODBC
+Postgresql
+Postgresql via ODBC
+
+Database Servers needing support
+================================
+db2
+ibase - Interbase ?
+oracle
+sqlite
+sqlite2
+access     - via odbc only
+sqlserver  - via odbc only
+
+
+Essentially, I just need the appropriate syntax for each of these 
+database servers to generate an auto increment column for the 
+report.report_id column.
+
+I only have access to MySQL and Postgresql so I can't test report.report_id column
+definitions for other databases.
+
+I suspect MS Access will be asked for at some stage. 
+Recommend we don't support connection strings and only
+support MS Access via ODBC - less hassle. At the moment bldtbls knows nothing
+about MS Access. Same goes for SQL Server.
+
+
+Return codes
+============
+EXIT_SUCCESS                   0
+EXIT_ERROR_DB_DRIVER           1
+EXIT_ERROR_DB_ENGINE           2
+EXIT_ERROR_DB_LOGIN            3
+EXIT_ERROR_DB_TABLE_BUILD      4
+EXIT_ERROR_MISSING_URL         5
+EXIT_ERROR_MISSING_USERNAME    6
+EXIT_ERROR_MISSING_PASSWORD    7
+EXIT_ERROR_MISSING_DB_ENGINE   8
+EXIT_ERROR_BAD_ARGS            9
+
+
+Files
+=====
+README.1ST        This file
+bldtbls.pro       qmake project file
+bldtbls.cpp       source
+test.sh           Bash Shell Script Test harness for bldtbls
+
+Case sensitivity
+================
+Obviously I'm working on Linux and accustomed to case sensitivity. Windows users
+may not be comfortable with this - just a thought - don't know how this should be
+addressed - or even whether it should be.
+
